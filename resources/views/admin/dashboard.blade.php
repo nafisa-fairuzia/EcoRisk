@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="space-y-6">
-
+<!-- ini aplikasi apa -->
     <!-- Header Banner -->
     <div class="p-6 rounded-2xl bg-white border border-neutral-200 shadow-xs">
         <div class="flex items-center gap-2 text-xs font-bold text-neutral-500 uppercase tracking-wider mb-1">
