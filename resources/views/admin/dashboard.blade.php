@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="space-y-6">
-
+<!-- bismillah stei-k tahun depan -->
     <!-- Header Banner -->
     <div class="p-6 rounded-2xl bg-white border border-neutral-200 shadow-xs">
         <div class="flex items-center gap-2 text-xs font-bold text-neutral-500 uppercase tracking-wider mb-1">
@@ -107,3 +107,9 @@
 
 </div>
 @endsection
+
+    <div class="bg-white rounded-2xl border border-neutral-200 shadow-xs overflow-hidden">
+        <div class="p-5 border-b border-neutral-100 flex items-center justify-between">
+            <h2 class="text-base font-bold text-neutral-900">Rekap Aduan Sampah Seluruh Wilayah</h2>
+            <span class="text-xs text-neutral-500">{{ $totalReports }} total aduan tercatat</span>
+        </div>
