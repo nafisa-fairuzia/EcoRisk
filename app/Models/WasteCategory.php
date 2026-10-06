@@ -16,5 +16,8 @@ class WasteCategory extends Model
         'instruksi_penanganan',
         'potensi_penyaluran',
         'status',
+        'name',
+        'type',
+        'carbon_offset_factor_per_kg',
     ];
 }

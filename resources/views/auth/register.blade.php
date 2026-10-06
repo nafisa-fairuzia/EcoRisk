@@ -1,76 +1,146 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Daftar Akun Warga - SiklusSampah</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-neutral-100 min-h-screen flex items-center justify-center p-4">
-    <div class="max-w-md w-full bg-white rounded-2xl shadow-xl p-6 space-y-4 border border-neutral-200">
-        <div class="text-center">
-            <h1 class="text-2xl font-bold text-teal-800">Daftar Akun Warga</h1>
-            <p class="text-xs text-neutral-500 mt-1">Daftarkan diri Anda untuk mengajukan pengaduan kebersihan lingkungan.</p>
+
+<body class="auth-page font-sans text-slate-800 antialiased">
+    <div class="auth-panel">
+        <div class="auth-brand">
+            <div class="mx-auto mb-3 flex size-12 items-center justify-center rounded-xl bg-white/15 text-base font-extrabold ring-1 ring-white/20">
+                ER
+            </div>
+            <h1 class="text-2xl font-bold">Daftar Akun Warga</h1>
+            <p class="mt-1 text-xs text-emerald-100">Buat akun untuk mengirim dan memantau laporan.</p>
         </div>
 
-        @if($errors->any())
-            <div class="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs">
+        <div class="auth-content">
+            @if ($errors->any())
+            <div class="mb-4 rounded-lg border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700" role="alert">
                 {{ $errors->first() }}
             </div>
-        @endif
+            @endif
 
-        <form action="{{ route('register') }}" method="POST" class="space-y-3">
-            @csrf
-            <div>
-                <label class="block text-xs font-semibold text-neutral-700 mb-1">Nama Lengkap</label>
-                <input type="text" name="name" required value="{{ old('name') }}" class="w-full px-3 py-2 border rounded-xl text-xs border-neutral-300" placeholder="Rian Pratama">
-            </div>
-            <div>
-                <label class="block text-xs font-semibold text-neutral-700 mb-1">Email</label>
-                <input type="email" name="email" required value="{{ old('email') }}" class="w-full px-3 py-2 border rounded-xl text-xs border-neutral-300" placeholder="rian@warga.id">
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-                <div>
-                    <label class="block text-xs font-semibold text-neutral-700 mb-1">Kata Sandi</label>
-                    <input type="password" name="password" required class="w-full px-3 py-2 border rounded-xl text-xs border-neutral-300" placeholder="Minimal 6 digit">
+            <form action="{{ route('register') }}" method="POST" class="grid gap-x-5 gap-y-4 sm:grid-cols-2">
+                @csrf
+                <div class="sm:col-span-2">
+                    <label for="name" class="mb-1.5 block text-sm font-semibold text-slate-700">Nama lengkap</label>
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        autocomplete="name"
+                        required
+                        value="{{ old('name') }}"
+                        class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none"
+                        placeholder="Nama lengkap" />
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-neutral-700 mb-1">Ulangi Sandi</label>
-                    <input type="password" name="password_confirmation" required class="w-full px-3 py-2 border rounded-xl text-xs border-neutral-300" placeholder="Ulangi sandi">
+                <div class="sm:col-span-2">
+                    <label for="email" class="mb-1.5 block text-sm font-semibold text-slate-700">Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        autocomplete="email"
+                        required
+                        value="{{ old('email') }}"
+                        class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none"
+                        placeholder="nama@email.com" />
                 </div>
-            </div>
-            <div>
-                <label class="block text-xs font-semibold text-neutral-700 mb-1">Alamat Rumah</label>
-                <input type="text" name="alamat" required value="{{ old('alamat') }}" class="w-full px-3 py-2 border rounded-xl text-xs border-neutral-300" placeholder="Jl. Melati No. 10">
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-                <div>
-                    <label class="block text-xs font-semibold text-neutral-700 mb-1">RT</label>
-                    <input type="text" name="rt" required value="{{ old('rt') }}" class="w-full px-3 py-2 border rounded-xl text-xs border-neutral-300">
+                <div class="grid grid-cols-1 gap-4 sm:col-span-2 sm:grid-cols-2">
+                    <div>
+                        <label for="password" class="mb-1.5 block text-sm font-semibold text-slate-700">Kata sandi</label>
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            autocomplete="new-password"
+                            required
+                            class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none"
+                            placeholder="Minimal 6 karakter" />
+                    </div>
+                    <div>
+                        <label for="password_confirmation" class="mb-1.5 block text-sm font-semibold text-slate-700">Ulangi sandi</label>
+                        <input
+                            type="password"
+                            name="password_confirmation"
+                            id="password_confirmation"
+                            autocomplete="new-password"
+                            required
+                            class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none"
+                            placeholder="Ulangi sandi" />
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-neutral-700 mb-1">RW</label>
-                    <input type="text" name="rw" required value="{{ old('rw') }}" class="w-full px-3 py-2 border rounded-xl text-xs border-neutral-300">
+                <div class="sm:col-span-2">
+                    <label for="alamat" class="mb-1.5 block text-sm font-semibold text-slate-700">Alamat rumah</label>
+                    <input
+                        type="text"
+                        name="alamat"
+                        id="alamat"
+                        autocomplete="street-address"
+                        required
+                        value="{{ old('alamat') }}"
+                        class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none"
+                        placeholder="Jalan dan nomor rumah" />
                 </div>
-            </div>
-            <div>
-                <label class="block text-xs font-semibold text-neutral-700 mb-1">No. WhatsApp / Telepon</label>
-                <input type="tel" name="telepon" value="{{ old('telepon') }}" class="w-full px-3 py-2 border rounded-xl text-xs border-neutral-300" placeholder="0812-xxxx-xxxx">
-            </div>
+                <div class="grid grid-cols-2 gap-4 sm:col-span-2">
+                    <div>
+                        <label for="rt" class="mb-1.5 block text-sm font-semibold text-slate-700">RT</label>
+                        <input
+                            type="text"
+                            name="rt"
+                            id="rt"
+                            required
+                            value="{{ old('rt') }}"
+                            class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none" />
+                    </div>
+                    <div>
+                        <label for="rw" class="mb-1.5 block text-sm font-semibold text-slate-700">RW</label>
+                        <input
+                            type="text"
+                            name="rw"
+                            id="rw"
+                            required
+                            value="{{ old('rw') }}"
+                            class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none" />
+                    </div>
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="telepon" class="mb-1.5 block text-sm font-semibold text-slate-700">Nomor telepon</label>
+                    <input
+                        type="tel"
+                        name="telepon"
+                        id="telepon"
+                        autocomplete="tel"
+                        value="{{ old('telepon') }}"
+                        class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20 focus:outline-none"
+                        placeholder="08xx-xxxx-xxxx" />
+                </div>
 
-            <button type="submit" class="w-full py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-md transition-colors cursor-pointer">
-                Daftar & Masuk ke Portal Warga
-            </button>
+                <button
+                    type="submit"
+                    class="w-full rounded-lg bg-emerald-700 px-4 py-3 text-sm font-bold text-white transition hover:bg-emerald-800 focus:ring-2 focus:ring-emerald-600 focus:ring-offset-2 focus:outline-none sm:col-span-2">
+                    Daftar & Masuk ke Portal Warga
+                </button>
 
-            <div class="text-center pt-2">
-                <p class="text-xs text-neutral-500 mb-2">
-                    Sudah punya akun? <a href="{{ route('login') }}" class="font-semibold text-teal-700 hover:underline">Masuk</a>
-                </p>
-                <a href="{{ route('home') }}" class="text-xs text-neutral-500 hover:underline">
-                    &larr; Kembali ke Halaman Utama
-                </a>
-            </div>
-        </form>
+                <div class="border-t border-slate-100 pt-4 text-center sm:col-span-2">
+                    <p class="text-sm text-slate-600">
+                        Sudah punya akun?
+                        <a href="{{ route('login') }}" class="font-bold text-emerald-700 hover:text-emerald-900">Masuk</a>
+                    </p>
+                    <a
+                        href="{{ route('home') }}"
+                        class="mt-3 inline-block text-xs font-medium text-slate-500 hover:text-slate-800">
+                        Kembali ke halaman utama
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
+
 </html>

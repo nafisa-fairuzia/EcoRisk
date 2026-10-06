@@ -46,7 +46,7 @@ class AuthFlowTest extends TestCase
         ]);
         $this->assertAuthenticatedAs($user);
 
-        $this->post(route('logout'))->assertRedirect(route('login'));
+        $this->post(route('logout'))->assertRedirect(route('home'));
         $this->assertGuest();
 
         $this->post(route('login'), [
@@ -87,6 +87,81 @@ class AuthFlowTest extends TestCase
             ->assertSessionHasErrors('email');
 
         $this->assertGuest();
+    }
+
+    public function test_admin_can_open_the_user_management_page(): void
+    {
+        /** @var User $admin */
+        $admin = User::factory()->create(['role' => 'admin']);
+        $managedUser = User::factory()->create([
+            'name' => 'Akun untuk dikelola',
+            'role' => 'mitra_daur_ulang',
+            'zona_wilayah' => 'RW 04',
+        ]);
+
+        $this->actingAs($admin)
+            ->get(route('admin.users.index'))
+            ->assertOk()
+            ->assertSee('Kelola User & Mitra')
+            ->assertSee('Atur akses pengguna dan mitra')
+            ->assertSee($managedUser->email)
+            ->assertSee('Nonaktifkan');
+    }
+
+    public function test_admin_menus_open_distinct_pages(): void
+    {
+        /** @var User $admin */
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)
+            ->get(route('admin.dashboard'))
+            ->assertOk()
+            ->assertSee('Dashboard Pengelolaan Sistem');
+
+        $this->get(route('admin.heatmap'))
+            ->assertOk()
+            ->assertSee('Heatmap Risiko Wilayah');
+
+        $this->get(route('admin.impact'))
+            ->assertOk()
+            ->assertSee('Ringkasan dampak hasil pemilahan');
+
+        $this->get(route('admin.users.index'))
+            ->assertOk()
+            ->assertSee('Atur akses pengguna dan mitra');
+    }
+
+    public function test_admin_can_toggle_another_users_status(): void
+    {
+        /** @var User $admin */
+        $admin = User::factory()->create(['role' => 'admin']);
+        $managedUser = User::factory()->create(['status' => 'Aktif']);
+
+        $this->actingAs($admin)
+            ->patch(route('admin.users.toggle', $managedUser->id))
+            ->assertRedirect()
+            ->assertSessionHas('success');
+
+        $this->assertDatabaseHas('users', [
+            'id' => $managedUser->id,
+            'status' => 'Nonaktif',
+        ]);
+    }
+
+    public function test_admin_cannot_toggle_their_own_status(): void
+    {
+        /** @var User $admin */
+        $admin = User::factory()->create(['role' => 'admin', 'status' => 'Aktif']);
+
+        $this->actingAs($admin)
+            ->patch(route('admin.users.toggle', $admin->id))
+            ->assertRedirect()
+            ->assertSessionHasErrors('user');
+
+        $this->assertDatabaseHas('users', [
+            'id' => $admin->id,
+            'status' => 'Aktif',
+        ]);
     }
 
     public function test_landing_reopens_login_modal_after_failed_login(): void
