@@ -1,9 +1,134 @@
-@import 'tailwindcss';
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
 
+@source "../views/**/*.blade.php";
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans:
+        "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+@layer base {
+    html,
+    body {
+        font-family: var(--font-sans);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+        font: inherit;
+    }
+}
+
+@layer components {
+    .auth-page {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        padding: 1.25rem;
+        background: #f1f5f9;
+    }
+
+    .auth-panel {
+        width: min(100%, 48rem);
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+        border-radius: 1rem;
+        background: #fff;
+        box-shadow: 0 24px 64px -32px rgb(15 23 42 / 30%);
+    }
+
+    .auth-panel--narrow {
+        width: min(100%, 36rem);
+    }
+
+    .auth-brand {
+        padding: 1.5rem;
+        background: linear-gradient(130deg, #064e3b, #047857);
+        color: #fff;
+        text-align: center;
+    }
+
+    .auth-content {
+        padding: 1.5rem;
+    }
+
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 0;
+        border-collapse: collapse;
+        color: #334155;
+        background: #fff;
+        font-size: 0.8125rem;
+        vertical-align: middle;
+    }
+
+    .table thead th {
+        padding: 0.8rem 1rem;
+        border-bottom: 1px solid #e2e8f0;
+        background: #f8fafc;
+        color: #475569;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .table tbody td {
+        padding: 0.8rem 1rem;
+        border-bottom: 1px solid #eef2f6;
+        vertical-align: middle;
+    }
+
+    .table tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .table.table-hover tbody tr:hover {
+        background: #f8fafc;
+    }
+}
+
+.landing-hero {
+    min-height: auto;
+    background-image:
+        linear-gradient(
+            105deg,
+            rgb(2 44 34 / 94%) 0%,
+            rgb(6 78 59 / 82%) 48%,
+            rgb(15 23 42 / 48%) 100%
+        ),
+        url("/img/background1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@media (min-width: 1024px) {
+    .landing-hero {
+        min-height: calc(100svh - 65px);
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-content,
+    .auth-brand {
+        padding: 1.25rem;
+    }
 }
