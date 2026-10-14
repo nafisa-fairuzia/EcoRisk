@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
 
             if ($user?->role === 'petugas') {
                 $lastSeenReportId = (int) session()->get(
-                    'petugas_pickups_last_seen_'.$user->getAuthIdentifier(),
+                    'petugas_pickups_last_seen_' . $user->getAuthIdentifier(),
                     0
                 );
 

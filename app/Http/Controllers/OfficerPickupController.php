@@ -15,25 +15,27 @@ class OfficerPickupController extends Controller
 {
     public function index(Request $request): View
     {
-        $reports = WasteReport::query()
+        $waitingReportsQuery = WasteReport::query()
             ->whereIn('status', ['reported', 'approved'])
-            ->orderByDesc('risk_score')
-            ->get();
+            ->orderByDesc('risk_score');
 
-        $lastSeenSessionKey = 'petugas_pickups_last_seen_'.$request->user()->getAuthIdentifier();
+        $lastSeenSessionKey = 'petugas_pickups_last_seen_' . $request->user()->getAuthIdentifier();
         $lastSeenReportId = (int) $request->session()->get($lastSeenSessionKey, 0);
-        $latestVisibleReportId = (int) $reports->max('id');
+        $latestVisibleReportId = (int) (clone $waitingReportsQuery)->max('id');
 
         if ($latestVisibleReportId > $lastSeenReportId) {
             $request->session()->put($lastSeenSessionKey, $latestVisibleReportId);
         }
 
-        $inProcessReports = WasteReport::query()
-            ->where('status', 'in_process')
+        $reports = WasteReport::query()
+            ->whereIn('status', ['reported', 'approved', 'in_process'])
+            ->orderByRaw("CASE WHEN status = 'in_process' THEN 1 ELSE 0 END")
             ->orderByDesc('risk_score')
-            ->get();
+            ->orderByDesc('id')
+            ->paginate(10, ['*'], 'reportsPage')
+            ->withQueryString();
 
-        return view('officer.pickups.index', compact('reports', 'inProcessReports'));
+        return view('officer.pickups.index', compact('reports'));
     }
 
     public function routes(): View
@@ -41,7 +43,8 @@ class OfficerPickupController extends Controller
         $routeReports = WasteReport::query()
             ->whereIn('status', ['reported', 'approved', 'in_process'])
             ->orderByDesc('risk_score')
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         return view('officer.routes.index', compact('routeReports'));
     }
@@ -50,9 +53,10 @@ class OfficerPickupController extends Controller
     {
         $validated = $request->validate([
             'status' => ['required', 'in:in_process,completed'],
+            'catatan_petugas' => ['nullable', 'string', 'max:500'],
         ]);
 
-        DB::transaction(function () use ($validated, $id): void {
+        DB::transaction(function () use ($request, $validated, $id): void {
             $report = WasteReport::query()->lockForUpdate()->findOrFail($id);
             $nextStatus = $validated['status'];
 
@@ -68,6 +72,9 @@ class OfficerPickupController extends Controller
             }
 
             $report->status = $nextStatus;
+            $report->petugas_id = $request->user()->id;
+            $report->tanggal_update_status = now();
+            $report->catatan_petugas = $validated['catatan_petugas'] ?? $report->catatan_petugas;
             $report->save();
 
             if ($isStartingPickup) {

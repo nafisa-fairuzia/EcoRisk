@@ -60,6 +60,22 @@ class WasteReport extends Model
                 (int) $wasteReport->risk_score
             );
         });
+
+        static::created(function (WasteReport $wasteReport): void {
+            $wasteReport->statusHistories()->create([
+                'status' => $wasteReport->status ?? 'reported',
+                'note' => $wasteReport->catatan_petugas,
+            ]);
+        });
+
+        static::updated(function (WasteReport $wasteReport): void {
+            if ($wasteReport->wasChanged('status')) {
+                $wasteReport->statusHistories()->create([
+                    'status' => $wasteReport->status,
+                    'note' => $wasteReport->catatan_petugas,
+                ]);
+            }
+        });
     }
 
     public function user(): BelongsTo
@@ -82,9 +98,55 @@ class WasteReport extends Model
         return $this->hasMany(PickupLog::class);
     }
 
+    public function statusHistories(): HasMany
+    {
+        return $this->hasMany(WasteReportStatusHistory::class)
+            ->orderBy('created_at')
+            ->orderBy('id');
+    }
+
     public function wasteSorting(): HasOne
     {
         return $this->hasOne(WasteSorting::class);
+    }
+
+    public function canBeEditedByResident(): bool
+    {
+        return in_array($this->status, ['reported', 'approved'], true)
+            && $this->petugas_id === null;
+    }
+
+    public function getStatusLabelAttribute(): string
+    {
+        return match ($this->status) {
+            'reported', 'pending' => 'Menunggu',
+            'approved' => 'Disetujui',
+            'in_process' => 'Diproses',
+            'completed' => 'Selesai',
+            'rejected' => 'Ditolak',
+            default => 'Status tidak diketahui',
+        };
+    }
+
+    public function getPriorityLabelAttribute(): string
+    {
+        return match ($this->priority_level) {
+            'low' => 'Rendah',
+            'medium' => 'Sedang',
+            'high' => 'Tinggi',
+            'critical' => 'Kritis',
+            default => '-',
+        };
+    }
+
+    public function getUrgencyLabelAttribute(): string
+    {
+        return match ($this->urgensi) {
+            'tinggi' => 'Tinggi',
+            'sedang' => 'Sedang',
+            'rendah' => 'Rendah',
+            default => 'Belum ditentukan',
+        };
     }
 
     public function calculateRiskScore(): int

@@ -9,6 +9,7 @@ use App\Models\WasteReport;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class AdminController extends Controller
@@ -26,23 +27,6 @@ class AdminController extends Controller
         $totalSortedKg = SortingRecord::sum('total_kg');
         $totalDistributedKg = DistributionRecord::sum('berat_kg');
 
-        $reports = WasteReport::with(['pelapor', 'petugas'])->latest()->paginate(10);
-
-        return view('admin.dashboard', compact(
-            'totalReports',
-            'completedReports',
-            'pendingReports',
-            'inProgressReports',
-            'completionRate',
-            'totalPetugas',
-            'totalSortedKg',
-            'totalDistributedKg',
-            'reports'
-        ));
-    }
-
-    public function impact(): View
-    {
         $impactTotals = DB::table('waste_sortings')
             ->selectRaw('COALESCE(SUM(organic_weight_kg + inorganic_weight_kg + paper_weight_kg), 0) as total_weight_kg')
             ->selectRaw('COALESCE(SUM(prevented_carbon_emissions_kg), 0) as prevented_emissions_kg')
@@ -75,10 +59,26 @@ class AdminController extends Controller
                 ];
             });
 
-        return view('admin.impact', compact(
+        $reports = WasteReport::with(['pelapor', 'petugas'])->latest()->paginate(10)->withQueryString();
+
+        return view('admin.dashboard', compact(
+            'totalReports',
+            'completedReports',
+            'pendingReports',
+            'inProgressReports',
+            'completionRate',
+            'totalPetugas',
+            'totalSortedKg',
+            'totalDistributedKg',
             'impactTotals',
-            'channelDistribution'
+            'channelDistribution',
+            'reports'
         ));
+    }
+
+    public function impact(): RedirectResponse
+    {
+        return redirect()->to(route('admin.dashboard').'#impact');
     }
 
     public function users(): View
@@ -90,6 +90,37 @@ class AdminController extends Controller
             ->withQueryString();
 
         return view('admin.users', compact('users'));
+    }
+
+    public function createUser(): View
+    {
+        return view('admin.users.create');
+    }
+
+    public function storeUser(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')],
+            'role' => ['required', Rule::in(['admin', 'petugas'])],
+            'zona_wilayah' => ['exclude_unless:role,petugas', 'required', 'string', 'max:100'],
+            'password' => ['required', 'confirmed', 'string', 'min:8'],
+        ]);
+
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'role' => $validated['role'],
+            'zona_wilayah' => $validated['role'] === 'admin'
+                ? 'Koordinator Induk Seluruh Wilayah'
+                : $validated['zona_wilayah'],
+            'password' => $validated['password'],
+            'status' => 'Aktif',
+        ]);
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', 'Akun '.($validated['role'] === 'petugas' ? 'petugas' : 'administrator').' berhasil dibuat. Berikan email dan kata sandi kepada pemilik akun melalui jalur yang aman.');
     }
 
     public function toggleUserStatus(Request $request, int $id): RedirectResponse

@@ -60,8 +60,8 @@ class PublicDashboardController extends Controller
                 'updated_at',
             ])
             ->orderByDesc('updated_at')
-            ->limit(5)
-            ->get();
+            ->paginate(5)
+            ->withQueryString();
 
         $totalWeightKg = (float) $totals->total_weight_kg;
         $totalWeightTon = $totalWeightKg / 1000;

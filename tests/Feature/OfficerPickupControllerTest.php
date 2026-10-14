@@ -12,7 +12,7 @@ class OfficerPickupControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_officer_sees_waiting_reports_ordered_by_risk_score(): void
+    public function test_officer_sees_waiting_and_in_process_reports_in_one_ordered_queue(): void
     {
         /** @var User $officer */
         $officer = User::factory()->create(['role' => 'petugas']);
@@ -29,7 +29,7 @@ class OfficerPickupControllerTest extends TestCase
             'is_near_river' => true,
             'status' => 'approved',
         ]);
-        WasteReport::create([
+        $inProcessReport = WasteReport::create([
             'user_id' => User::factory()->create()->id,
             'address' => 'Laporan berjalan',
             'description' => 'Sudah mulai diangkut',
@@ -40,13 +40,17 @@ class OfficerPickupControllerTest extends TestCase
             ->get(route('petugas.pickups.index'))
             ->assertOk()
             ->assertViewIs('officer.pickups.index')
-            ->assertViewHas('reports', function ($reports) use ($highRiskReport, $lowRiskReport): bool {
+            ->assertViewHas('reports', function ($reports) use ($highRiskReport, $lowRiskReport, $inProcessReport): bool {
                 return $reports->pluck('id')->all() === [
                     $highRiskReport->id,
                     $lowRiskReport->id,
+                    $inProcessReport->id,
                 ];
             })
-            ->assertViewHas('inProcessReports', fn($reports): bool => $reports->count() === 1);
+            ->assertSee('Mulai angkut')
+            ->assertSee('Tandai selesai')
+            ->assertSee('Sedang diproses')
+            ->assertDontSee('Pengangkutan berlangsung');
     }
 
     public function test_pickup_badge_clears_after_viewing_radar_and_returns_for_new_reports(): void
@@ -64,6 +68,9 @@ class OfficerPickupControllerTest extends TestCase
         $this->actingAs($officer)
             ->get(route('petugas.dashboard'))
             ->assertOk()
+            ->assertSee('Ringkasan operasional')
+            ->assertSee('Akses cepat pekerjaan')
+            ->assertDontSee('Daftar Pengaduan Masuk')
             ->assertSee('1 laporan baru');
 
         $this->get(route('petugas.pickups.index'))
@@ -137,6 +144,10 @@ class OfficerPickupControllerTest extends TestCase
             'officer_id' => $officer->id,
             'status' => 'in_process',
         ]);
+        $this->assertDatabaseHas('waste_report_status_histories', [
+            'waste_report_id' => $report->id,
+            'status' => 'in_process',
+        ]);
         $this->assertNotNull(PickupLog::query()->firstOrFail()->pickup_time);
     }
 
@@ -168,6 +179,10 @@ class OfficerPickupControllerTest extends TestCase
             'status' => 'completed',
         ]);
         $this->assertDatabaseHas('pickup_logs', [
+            'waste_report_id' => $report->id,
+            'status' => 'completed',
+        ]);
+        $this->assertDatabaseHas('waste_report_status_histories', [
             'waste_report_id' => $report->id,
             'status' => 'completed',
         ]);

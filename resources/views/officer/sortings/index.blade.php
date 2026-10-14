@@ -8,14 +8,19 @@
         </div>
         <a
             href="{{ route('petugas.pickups.index') }}"
-            class="rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50">Kembali ke antrean angkut</a>
+            class="rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50">
+            Kembali ke antrean angkut
+        </a>
     </header>
 
-    <div class="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-xs">
+    <div class="border border-neutral-200 bg-white shadow-xs">
+        <div data-table-container data-filter-column="3">
+            <x-table-tools filter-label="prioritas" />
         <div class="table-responsive">
-            <table class="table table-hover min-w-180">
+            <table class="table table-hover" data-filter-table>
                 <thead>
                     <tr>
+                        <th>No</th>
                         <th>Lokasi</th>
                         <th>Skor risiko</th>
                         <th>Prioritas</th>
@@ -26,25 +31,38 @@
                 <tbody>
                     @forelse ($reports as $report)
                     <tr>
+                        <td>{{ $reports->firstItem() + $loop->index }}</td>
                         <td class="max-w-md font-medium text-neutral-900">{{ $report->address }}</td>
-                        <td>{{ $report->risk_score }}</td>
-                        <td class="capitalize">{{ $report->priority_level }}</td>
+                        <td>
+                            <span class="inline-flex items-center rounded-md bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-800">
+                                {{ $report->risk_score }}
+                            </span>
+                        </td>
+                        <td>
+                            <x-report-badge type="priority" :value="$report->priority_level" :label="$report->priority_label" />
+                        </td>
                         <td>{{ $report->updated_at->translatedFormat('d M Y') }}</td>
                         <td>
                             <a
                                 href="{{ route('petugas.sortings.create', $report->id) }}"
-                                class="inline-flex items-center rounded-lg bg-emerald-700 px-3 py-2 text-xs font-bold text-white transition hover:bg-emerald-800">Catat pemilahan</a>
+                                class="inline-flex items-center rounded-lg bg-emerald-700 px-3 py-2 text-xs font-bold text-white transition hover:bg-emerald-800">
+                                Catat pemilahan
+                            </a>
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td class="py-8 text-center text-neutral-500" colspan="5">
+                        <td class="py-8 text-center text-neutral-500" colspan="6">
                             Tidak ada laporan selesai yang menunggu pemilahan.
                         </td>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
+        </div>
+        <div class="table-pagination border-t border-neutral-100 px-4 py-3">
+            {{ $reports->links() }}
+        </div>
         </div>
     </div>
 </section>

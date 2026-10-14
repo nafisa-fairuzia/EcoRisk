@@ -5,8 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>{{ $title ?? 'EcoRisk — Pengelolaan Sampah Berbasis Risiko' }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}">
+    <title>{{ $title ?? 'EcoRisk — Pengelolaan Sampah Berbasis Risiko' }}</title> @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
@@ -63,7 +64,7 @@
                                 </span>
                             </nav>
                             <h1 class="truncate text-base font-bold tracking-tight text-slate-900 sm:text-lg">
-                                @yield('header', $title ?? 'Dashboard')
+                                @yield('header')
                             </h1>
                         </div>
                     </div>
@@ -79,12 +80,16 @@
 
                         <details class="group relative">
                             <summary class="flex cursor-pointer list-none items-center gap-2 rounded-2xl border border-slate-200 bg-white p-1.5 pr-2.5 shadow-sm transition hover:border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                                @if (auth()->user()->profile_photo_url)
+                                <img src="{{ auth()->user()->profile_photo_url }}" alt="Foto profil {{ auth()->user()->name }}" class="size-9 rounded-xl object-cover" />
+                                @else
                                 <span class="flex size-9 items-center justify-center rounded-xl bg-emerald-700 text-xs font-extrabold text-white">
                                     {{ auth()->user()->initials }}
                                 </span>
+                                @endif
                                 <span class="hidden max-w-36 text-left sm:block">
                                     <span class="block truncate text-xs font-bold text-slate-800">{{ auth()->user()->name }}</span>
-                                    <span class="block text-[10px] font-medium text-slate-500 capitalize">{{ str_replace('_', ' ', $currentRole) }}</span>
+                                    <span class="block text-[10px] font-medium text-slate-500">{{ auth()->user()->roleLabel }}</span>
                                 </span>
                                 <svg class="hidden size-4 text-slate-400 transition group-open:rotate-180 sm:block" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                     <path fill-rule="evenodd" d="M5.22 7.47a.75.75 0 0 1 1.06 0L10 11.19l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 8.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
@@ -97,9 +102,15 @@
                                 </div>
                                 <div class="px-3 py-2">
                                     <span class="inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-800 capitalize ring-1 ring-emerald-100">
-                                        {{ str_replace('_', ' ', $currentRole) }}
+                                        {{ auth()->user()->roleLabel }}
                                     </span>
                                 </div>
+                                <a
+                                    href="{{ route('profile.edit') }}"
+                                    class="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-emerald-50 hover:text-emerald-800">
+                                    <i class="fa-solid fa-user-pen w-4 text-center"></i>
+                                    Profil saya
+                                </a>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
                                     <button

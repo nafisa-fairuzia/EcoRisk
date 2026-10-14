@@ -18,7 +18,8 @@ class WasteSortingController extends Controller
             ->where('status', 'completed')
             ->whereDoesntHave('wasteSorting')
             ->orderByDesc('risk_score')
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         return view('officer.sortings.index', compact('reports'));
     }

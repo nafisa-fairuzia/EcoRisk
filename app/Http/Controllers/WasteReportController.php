@@ -6,6 +6,8 @@ use App\Models\WasteReport;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class WasteReportController extends Controller
@@ -17,8 +19,15 @@ class WasteReportController extends Controller
             ->orderByDesc('risk_score')
             ->get();
 
-        $mapPoints = $reports
-            ->filter(fn(WasteReport $report): bool => $report->latitude !== null && $report->longitude !== null)
+        $mappedReports = $reports
+            ->filter(fn(WasteReport $report): bool => is_numeric($report->latitude)
+                && is_numeric($report->longitude)
+                && (float) $report->latitude >= -90
+                && (float) $report->latitude <= 90
+                && (float) $report->longitude >= -180
+                && (float) $report->longitude <= 180);
+
+        $mapPoints = $mappedReports
             ->map(fn(WasteReport $report): array => [
                 'id' => $report->id,
                 'latitude' => (float) $report->latitude,
@@ -26,10 +35,11 @@ class WasteReportController extends Controller
                 'risk_score' => (float) $report->risk_score,
                 'priority_level' => $report->priority_level,
                 'address' => $report->address,
+                'code' => $report->kode_laporan,
             ])
             ->values();
 
-        $riskZones = $reports
+        $riskZones = $mappedReports
             ->groupBy(fn(WasteReport $report): string => $report->rw ? 'RW ' . $report->rw : 'Area belum ditentukan')
             ->map(function (Collection $zoneReports, string $zoneName): array {
                 $maxRisk = (int) $zoneReports->max('risk_score');
@@ -52,12 +62,41 @@ class WasteReportController extends Controller
 
         $riskSummary = [
             'active_reports' => $reports->count(),
+            'mapped_reports' => $mapPoints->count(),
             'high_priority_reports' => $reports->whereIn('priority_level', ['high', 'critical'])->count(),
             'critical_reports' => $reports->where('priority_level', 'critical')->count(),
             'monitored_zones' => $riskZones->count(),
         ];
 
-        return view('reports.index', compact('reports', 'mapPoints', 'riskZones', 'riskSummary'));
+        $tableReports = WasteReport::query()
+            ->whereIn('status', ['reported', 'approved', 'in_process'])
+            ->orderByDesc('risk_score')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('reports.index', compact('reports', 'mapPoints', 'riskZones', 'riskSummary', 'tableReports'));
+    }
+
+    public function show(Request $request, WasteReport $report): View
+    {
+        $user = $request->user();
+        abort_unless(
+            $user->isAdmin() || $user->isPetugas() || ($user->isWarga() && $report->user_id === $user->id),
+            404
+        );
+
+        $report->load(['pelapor', 'petugas', 'statusHistories']);
+
+        $publicUrl = static fn (?string $path): ?string => $path === null
+            ? null
+            : (Str::startsWith($path, ['/', 'http://', 'https://'])
+                ? $path
+                : Storage::disk('public')->url($path));
+        $photoUrl = $publicUrl($report->photo) ?? $publicUrl($report->foto_url);
+        $completionPhotoUrl = $publicUrl($report->foto_selesai_url);
+        $canEditReport = $user->isWarga() && $report->canBeEditedByResident();
+
+        return view('reports.show', compact('report', 'photoUrl', 'completionPhotoUrl', 'canEditReport'));
     }
 
     public function store(Request $request): RedirectResponse

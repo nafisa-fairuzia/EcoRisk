@@ -17,26 +17,39 @@ class PetugasController extends Controller
     {
         $user = Auth::user();
 
-        $pendingReports = WasteReport::whereIn('status', ['reported', 'approved'])
-            ->orderByDesc('risk_score')
-            ->get();
-        $inProgressReports = WasteReport::where('status', 'in_process')
-            ->orderByDesc('risk_score')
-            ->get();
-        $completedReports = WasteReport::where('status', 'completed')->latest()->take(10)->get();
+        $pendingReportsCount = WasteReport::query()
+            ->whereIn('status', ['reported', 'approved'])
+            ->count();
+        $inProgressReportsCount = WasteReport::query()
+            ->where('status', 'in_process')
+            ->count();
+        $highPriorityReportsCount = WasteReport::query()
+            ->whereIn('status', ['reported', 'approved'])
+            ->whereIn('priority_level', ['high', 'critical'])
+            ->count();
+        $sortingQueueCount = WasteReport::query()
+            ->where('status', 'completed')
+            ->whereDoesntHave('wasteSorting')
+            ->count();
 
-        $sortingRecords = SortingRecord::where('petugas_id', $user->id)->latest()->take(10)->get();
-        $distributionRecords = DistributionRecord::where('petugas_id', $user->id)->latest()->take(10)->get();
+        $lastSeenReportId = (int) session()->get(
+            'petugas_pickups_last_seen_' . $user->getAuthIdentifier(),
+            0
+        );
+        $newReportsCount = WasteReport::query()
+            ->whereIn('status', ['reported', 'approved'])
+            ->where('id', '>', $lastSeenReportId)
+            ->count();
 
         $totalSortedKg = SortingRecord::where('petugas_id', $user->id)->sum('total_kg');
         $totalDistributedKg = DistributionRecord::where('petugas_id', $user->id)->sum('berat_kg');
 
         return view('petugas.dashboard', compact(
-            'pendingReports',
-            'inProgressReports',
-            'completedReports',
-            'sortingRecords',
-            'distributionRecords',
+            'pendingReportsCount',
+            'inProgressReportsCount',
+            'highPriorityReportsCount',
+            'sortingQueueCount',
+            'newReportsCount',
             'totalSortedKg',
             'totalDistributedKg'
         ));
@@ -93,7 +106,7 @@ class PetugasController extends Controller
             return $report;
         });
 
-        return back()->with('success', "Status laporan {$report->kode_laporan} berhasil diperbarui menjadi {$report->status}.");
+        return back()->with('success', "Status laporan {$report->kode_laporan} berhasil diperbarui menjadi {$report->status_label}.");
     }
 
     public function storeSorting(Request $request)

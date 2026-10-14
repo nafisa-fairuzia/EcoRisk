@@ -67,20 +67,24 @@
                 </div>
             </article>
 
-            <article class="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
+            <article class="border border-neutral-200 bg-white p-5 shadow-sm">
                 <h2 class="text-lg font-semibold">Lokasi terbaru yang ditangani</h2>
+                <div class="mt-4" data-table-container data-filter-column="2">
+                <x-table-tools filter-label="prioritas" />
                 <div class="table-responsive mt-4">
-                    <table class="table-hover table">
+                    <table class="table table-hover" data-filter-table>
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th class="py-3 pr-3">Lokasi</th>
-                                <th class="py-3 pr-3">Status krisis</th>
+                                <th class="py-3 pr-3">Prioritas risiko</th>
                                 <th class="py-3">Skor</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($recentHandledReports as $report)
                                 <tr>
+                                    <td>{{ $recentHandledReports->firstItem() + $loop->index }}</td>
                                     <td>
                                         <div class="font-medium">{{ $report->address }}</div>
                                         @if ($report->latitude !== null && $report->longitude !== null)
@@ -90,21 +94,23 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <span class="rounded-full bg-amber-50 px-2 py-1 text-xs font-semibold text-amber-800">
-                                            {{ ucfirst($report->priority_level) }}
-                                        </span>
+                                        <x-report-badge type="priority" :value="$report->priority_level" :label="$report->priority_label" />
                                     </td>
                                     <td>{{ $report->risk_score }}</td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="py-6 text-center text-neutral-500">
+                                    <td colspan="4" class="py-6 text-center text-neutral-500">
                                         Belum ada laporan selesai yang tercatat memiliki hasil pemilahan.
                                     </td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
+                </div>
+                <div class="table-pagination border-t border-neutral-100 px-4 py-3">
+                    {{ $recentHandledReports->links() }}
+                </div>
                 </div>
             </article>
         </section>

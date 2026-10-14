@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -20,6 +21,7 @@ class User extends Authenticatable
         'zona_wilayah',
         'telepon',
         'status',
+        'profile_photo_path',
     ];
 
     protected $hidden = [
@@ -54,8 +56,16 @@ class User extends Authenticatable
             'admin' => 'Administrator Sistem',
             'petugas' => 'Petugas Lapangan',
             'warga' => 'Warga Masyarakat',
+            'mitra_daur_ulang' => 'Mitra Daur Ulang',
             default => 'Pengguna',
         };
+    }
+
+    public function getProfilePhotoUrlAttribute(): ?string
+    {
+        return $this->profile_photo_path
+            ? Storage::disk('public')->url($this->profile_photo_path)
+            : null;
     }
 
     // Inisial untuk avatar (contoh: "Hendra Wijaya" => "HW")

@@ -32,7 +32,7 @@
                     Intensitas risiko per wilayah
                 </h2>
             </div>
-            <span class="text-xs font-semibold text-neutral-500">{{ $reports->count() }} laporan aktif</span>
+            <span class="text-xs font-semibold text-neutral-500">{{ $mapPoints->count() }} laporan berkoordinat</span>
         </div>
 
         @if ($riskZones->isNotEmpty())
@@ -104,36 +104,64 @@
             aria-label="Peta interaktif titik laporan risiko"></div>
         @if ($mapPoints->isEmpty())
         <p class="border-t border-neutral-100 px-5 py-3 text-xs text-neutral-500" role="status">
-            Belum ada laporan aktif dengan koordinat. Peta akan menampilkan titik setelah lokasi tersedia.
+            @if ($reports->isNotEmpty())
+            Belum ada laporan aktif yang memiliki koordinat valid. Laporan tanpa titik lokasi tidak ditampilkan agar peta tidak menebak lokasi.
+            @else
+            Belum ada laporan aktif untuk dipetakan.
+            @endif
+        </p>
+        @elseif ($mapPoints->count() < $reports->count())
+        <p class="border-t border-neutral-100 px-5 py-3 text-xs text-neutral-500" role="status">
+            {{ $reports->count() - $mapPoints->count() }} laporan aktif tanpa koordinat valid tidak ditampilkan pada peta.
         </p>
         @endif
     </section>
 
-    <div class="table-responsive overflow-hidden rounded-xl border border-neutral-200 bg-white">
-        <table class="table-hover table">
-            <thead>
-                <tr>
-                    <th>Alamat</th>
-                    <th>Status</th>
-                    <th>Prioritas</th>
-                    <th>Skor Risiko</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($reports as $report)
-                <tr>
-                    <td>{{ $report->address }}</td>
-                    <td>{{ $report->status }}</td>
-                    <td>{{ $report->priority_level }}</td>
-                    <td>{{ $report->risk_score }}</td>
-                </tr>
-                @empty
-                <tr>
-                    <td class="px-4 py-6 text-center text-neutral-500" colspan="4">Belum ada laporan aktif.</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+    <div class="border border-neutral-200 bg-white">
+        <div data-table-container data-filter-column="2">
+        <x-table-tools filter-label="status" />
+        <div class="table-responsive">
+            <table class="table table-hover" data-filter-table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Alamat</th>
+                        <th>Status</th>
+                        <th>Prioritas</th>
+                        <th>Skor Risiko</th>
+                        @if (auth()->user()->isAdmin() || auth()->user()->isPetugas())
+                        <th>Detail</th>
+                        @endif
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($tableReports as $report)
+                    <tr>
+                        <td>{{ $tableReports->firstItem() + $loop->index }}</td>
+                        <td>{{ $report->address }}</td>
+                        <td><x-report-badge type="status" :value="$report->status" :label="$report->status_label" /></td>
+                        <td><x-report-badge type="priority" :value="$report->priority_level" :label="$report->priority_label" /></td>
+                        <td>{{ $report->risk_score }}</td>
+                        @if (auth()->user()->isAdmin() || auth()->user()->isPetugas())
+                        <td>
+                            <a
+                                href="{{ auth()->user()->isAdmin() ? route('admin.laporan.show', $report) : route('petugas.laporan.show', $report) }}"
+                                class="font-semibold text-emerald-800 hover:text-emerald-950">Lihat aduan</a>
+                        </td>
+                        @endif
+                    </tr>
+                    @empty
+                    <tr>
+                        <td class="px-4 py-6 text-center text-neutral-500" colspan="{{ auth()->user()->isAdmin() || auth()->user()->isPetugas() ? 6 : 5 }}">Belum ada laporan aktif.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        <div class="table-pagination border-t border-neutral-100 px-4 py-3">
+            {{ $tableReports->links() }}
+        </div>
+        </div>
     </div>
 </section>
 

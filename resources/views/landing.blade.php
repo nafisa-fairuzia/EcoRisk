@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EcoRisk — Kelola Risiko Pulihkan Lingkungan</title>
+    <title>EcoRisk</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="bg-slate-50 font-sans text-slate-800 antialiased">
     <header class="sticky top-0 z-30 border-b border-neutral-200 bg-white/95 backdrop-blur-md">
         <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
             <div class="flex items-center gap-3">
-                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-600 font-bold text-white shadow-xs">
-                    ER
+                <div class="flex size-10 items-center justify-center overflow-hidden rounded-2xl">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-full w-full object-cover">
                 </div>
                 <div>
-                    <span class="text-xl font-bold tracking-tight text-neutral-900">EcoRisk</span>
+                    <span class="text-xl font-bold tracking-tight text-neutral-900">Eco<span class="text-emerald-600">Risk</span></span>
                 </div>
             </div>
 
             <div class="flex items-center gap-2 sm:gap-3">
                 <a
                     href="{{ route('login') }}"
-                    class="cursor-pointer rounded-xl px-3.5 py-2 text-xs font-bold text-neutral-700 transition-colors hover:bg-neutral-100"
-                >
+                    class="cursor-pointer rounded-xl px-3.5 py-2 text-xs font-bold text-neutral-700 transition-colors hover:bg-neutral-100">
                     Masuk
                 </a>
                 <a
                     href="{{ route('register') }}"
-                    class="cursor-pointer rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition-colors hover:bg-emerald-700"
-                >
+                    class="cursor-pointer rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition-colors hover:bg-emerald-700">
                     Daftar Warga
                 </a>
             </div>
@@ -57,30 +57,25 @@
                     <div class="flex flex-wrap gap-4 pt-2">
                         <a
                             href="{{ route('register') }}"
-                            class="rounded-lg bg-lime-400 px-6 py-3 font-semibold text-emerald-950 shadow-md transition duration-200 hover:bg-lime-300"
-                        >
+                            class="rounded-lg bg-lime-400 px-6 py-3 font-semibold text-emerald-950 shadow-md transition duration-200 hover:bg-lime-300">
                             Laporkan Risiko Lingkungan
                         </a>
                         <a
                             href="{{ route('login') }}"
-                            class="rounded-lg border border-emerald-700/50 bg-emerald-900/80 px-6 py-3 font-medium text-white transition duration-200 hover:bg-emerald-800"
-                        >
+                            class="rounded-lg border border-emerald-700/50 bg-emerald-900/80 px-6 py-3 font-medium text-white transition duration-200 hover:bg-emerald-800">
                             Masuk ke Portal
                         </a>
                     </div>
                     <div class="flex flex-wrap gap-x-5 gap-y-2 pt-2 text-xs text-slate-300">
-                        <span class="flex items-center gap-1.5"
-                            ><svg class="h-4 w-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                        <span class="flex items-center gap-1.5"><svg class="h-4 w-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                             </svg>
                             Prioritas berbasis risiko</span>
-                        <span class="flex items-center gap-1.5"
-                            ><svg class="h-4 w-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                        <span class="flex items-center gap-1.5"><svg class="h-4 w-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                             </svg>
                             Penanganan terukur</span>
-                        <span class="flex items-center gap-1.5"
-                            ><svg class="h-4 w-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                        <span class="flex items-center gap-1.5"><svg class="h-4 w-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                             </svg>
                             Dampak transparan</span>
@@ -96,7 +91,9 @@
                         </div>
                         <div class="space-y-4 text-sm">
                             <div class="flex gap-3 rounded-xl border border-emerald-800/30 bg-emerald-950/50 p-3.5">
-                                <div class="h-fit rounded-lg bg-emerald-800/50 p-2 text-emerald-400">📍</div>
+                                <div class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-emerald-800/50 text-emerald-400">
+                                    <i class="fa-solid fa-map-pin text-sm"></i>
+                                </div>
                                 <div>
                                     <h4 class="font-semibold text-white">Kenali titik berisiko</h4>
                                     <p class="mt-0.5 text-xs text-slate-300">
@@ -104,8 +101,11 @@
                                     </p>
                                 </div>
                             </div>
+
                             <div class="flex gap-3 rounded-xl border border-emerald-800/30 bg-emerald-950/50 p-3.5">
-                                <div class="h-fit rounded-lg bg-emerald-800/50 p-2 text-emerald-400">⚡</div>
+                                <div class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-emerald-800/50 text-emerald-400">
+                                    <i class="fa-solid fa-bolt text-sm"></i>
+                                </div>
                                 <div>
                                     <h4 class="font-semibold text-white">Dahulukan yang paling kritis</h4>
                                     <p class="mt-0.5 text-xs text-slate-300">
@@ -113,8 +113,11 @@
                                     </p>
                                 </div>
                             </div>
+
                             <div class="flex gap-3 rounded-xl border border-emerald-800/30 bg-emerald-950/50 p-3.5">
-                                <div class="h-fit rounded-lg bg-emerald-800/50 p-2 text-emerald-400">📊</div>
+                                <div class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-emerald-800/50 text-emerald-400">
+                                    <i class="fa-solid fa-chart-pie text-sm"></i>
+                                </div>
                                 <div>
                                     <h4 class="font-semibold text-white">Ukur dampak bersama</h4>
                                     <p class="mt-0.5 text-xs text-slate-300">
@@ -151,8 +154,8 @@
                 <!-- Card 1 -->
                 <div class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
                     <div class="space-y-4">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-xl font-bold text-blue-600">
-                            👤
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                            <i class="fa-solid fa-user text-lg"></i>
                         </div>
                         <h3 class="text-xl font-bold text-slate-900">Portal Warga</h3>
                         <p class="text-sm leading-relaxed text-slate-600">
@@ -163,9 +166,8 @@
                     <div class="mt-6 border-t border-slate-100 pt-6">
                         <a
                             href="{{ route('register') }}"
-                            class="flex items-center gap-1 text-sm font-semibold text-emerald-700 hover:text-emerald-800"
-                        >
-                            Daftar Akun Warga <span>→</span>
+                            class="flex items-center gap-1 text-sm font-semibold text-emerald-700 hover:text-emerald-800">
+                            Daftar Akun Warga <i class="fa-solid fa-arrow-right text-xs"></i>
                         </a>
                     </div>
                 </div>
@@ -173,8 +175,8 @@
                 <!-- Card 2 -->
                 <div class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
                     <div class="space-y-4">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-50 text-xl font-bold text-amber-600">
-                            🚚
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+                            <i class="fa-solid fa-truck text-lg"></i>
                         </div>
                         <h3 class="text-xl font-bold text-slate-900">Petugas Lapangan</h3>
                         <p class="text-sm leading-relaxed text-slate-600">
@@ -185,9 +187,8 @@
                     <div class="mt-6 border-t border-slate-100 pt-6">
                         <a
                             href="{{ route('login') }}"
-                            class="flex items-center gap-1 text-sm font-semibold text-emerald-700 hover:text-emerald-800"
-                        >
-                            Masuk Portal Petugas <span>→</span>
+                            class="flex items-center gap-1 text-sm font-semibold text-emerald-700 hover:text-emerald-800">
+                            Masuk Portal Petugas <i class="fa-solid fa-arrow-right text-xs"></i>
                         </a>
                     </div>
                 </div>
@@ -195,8 +196,8 @@
                 <!-- Card 3 -->
                 <div class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
                     <div class="space-y-4">
-                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-xl font-bold text-emerald-600">
-                            🏛️
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                            <i class="fa-solid fa-building-shield text-lg"></i>
                         </div>
                         <h3 class="text-xl font-bold text-slate-900">Admin Kelurahan</h3>
                         <p class="text-sm leading-relaxed text-slate-600">
@@ -207,9 +208,8 @@
                     <div class="mt-6 border-t border-slate-100 pt-6">
                         <a
                             href="{{ route('login') }}"
-                            class="flex items-center gap-1 text-sm font-semibold text-emerald-700 hover:text-emerald-800"
-                        >
-                            Panel Kendali Utama <span>→</span>
+                            class="flex items-center gap-1 text-sm font-semibold text-emerald-700 hover:text-emerald-800">
+                            Panel Kendali Utama <i class="fa-solid fa-arrow-right text-xs"></i>
                         </a>
                     </div>
                 </div>
@@ -296,8 +296,7 @@
                     <div class="pt-2">
                         <a
                             href="{{ route('register') }}"
-                            class="inline-block rounded-lg bg-emerald-800 px-6 py-3 text-sm font-semibold text-white shadow transition hover:bg-emerald-900"
-                        >
+                            class="inline-block rounded-lg bg-emerald-800 px-6 py-3 text-sm font-semibold text-white shadow transition hover:bg-emerald-900">
                             Ikut Berkontribusi Sekarang
                         </a>
                     </div>
@@ -411,25 +410,69 @@
             </div>
 
             <div class="space-y-4">
+                <!-- FAQ 1 -->
                 <details class="group [&_summary::-webkit-details-marker]:hidden rounded-xl border border-slate-200 bg-white p-5">
                     <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-800">
                         <span>Apakah saya harus membayar untuk membuat akun warga?</span>
-                        <span class="font-bold text-emerald-600 transition group-open:rotate-180">+</span>
+                        <span class="font-bold text-emerald-600 transition duration-200 group-open:rotate-45">+</span>
                     </summary>
                     <p class="mt-3 text-xs leading-relaxed text-slate-600">
-                        Tidak, seluruh fasilitas pelaporan dan akses platform EcoRisk disediakan secara gratis untuk
-                        seluruh warga Kelurahan .
+                        Tidak, seluruh fasilitas pelaporan dan akses platform EcoRisk disediakan secara gratis untuk seluruh warga.
                     </p>
                 </details>
 
+                <!-- FAQ 2 -->
                 <details class="group [&_summary::-webkit-details-marker]:hidden rounded-xl border border-slate-200 bg-white p-5">
                     <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-800">
                         <span>Bagaimana skor risiko sampah dihitung oleh sistem?</span>
-                        <span class="font-bold text-emerald-600 transition group-open:rotate-180">+</span>
+                        <span class="font-bold text-emerald-600 transition duration-200 group-open:rotate-45">+</span>
                     </summary>
                     <p class="mt-3 text-xs leading-relaxed text-slate-600">
-                        Skor risiko dihitung berdasarkan volume sampah, jenis material (organik/anorganik/B3), serta
-                        kedekatannya dengan fasilitas umum atau pemukiman warga.
+                        Skor risiko dihitung secara otomatis berdasarkan volume/luas tumpukan sampah, jenis material (organik, anorganik, B3), tingkat dampak lingkungan, serta kedekatannya dengan fasilitas umum atau pemukiman warga.
+                    </p>
+                </details>
+
+                <!-- FAQ 3 -->
+                <details class="group [&_summary::-webkit-details-marker]:hidden rounded-xl border border-slate-200 bg-white p-5">
+                    <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-800">
+                        <span>Bagaimana cara melaporkan penumpukan sampah liar di sekitar lingkungan saya?</span>
+                        <span class="font-bold text-emerald-600 transition duration-200 group-open:rotate-45">+</span>
+                    </summary>
+                    <p class="mt-3 text-xs leading-relaxed text-slate-600">
+                        Anda cukup masuk ke akun Anda, klik tombol <strong>"Buat Laporan"</strong>, unggah foto lokasi, tentukan titik lokasi pada peta, dan isi deskripsi singkat mengenai kondisi sampah tersebut.
+                    </p>
+                </details>
+
+                <!-- FAQ 4 -->
+                <details class="group [&_summary::-webkit-details-marker]:hidden rounded-xl border border-slate-200 bg-white p-5">
+                    <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-800">
+                        <span>Apakah laporan yang saya kirimkan bersifat anonim atau dapat dilihat publik?</span>
+                        <span class="font-bold text-emerald-600 transition duration-200 group-open:rotate-45">+</span>
+                    </summary>
+                    <p class="mt-3 text-xs leading-relaxed text-slate-600">
+                        Data lokasi dan detail laporan dapat dilihat di peta pemantauan umum, namun data pribadi Anda akan dijaga kerahasiaannya dan hanya dapat diakses oleh tim admin/petugas terkait untuk verifikasi.
+                    </p>
+                </details>
+
+                <!-- FAQ 5 -->
+                <details class="group [&_summary::-webkit-details-marker]:hidden rounded-xl border border-slate-200 bg-white p-5">
+                    <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-800">
+                        <span>Berapa lama waktu yang dibutuhkan hingga laporan ditindaklanjuti?</span>
+                        <span class="font-bold text-emerald-600 transition duration-200 group-open:rotate-45">+</span>
+                    </summary>
+                    <p class="mt-3 text-xs leading-relaxed text-slate-600">
+                        Waktu penanganan bervariasi tergantung tingkat risiko dan prioritas. Laporan berisiko tinggi (seperti limbah B3 atau tumpukan yang menyumbat aliran air) akan diverifikasi dan diprioritaskan untuk penanganan lebih cepat oleh petugas.
+                    </p>
+                </details>
+
+                <!-- FAQ 6 -->
+                <details class="group [&_summary::-webkit-details-marker]:hidden rounded-xl border border-slate-200 bg-white p-5">
+                    <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-800">
+                        <span>Bagaimana cara mengetahui status perkembangan laporan saya?</span>
+                        <span class="font-bold text-emerald-600 transition duration-200 group-open:rotate-45">+</span>
+                    </summary>
+                    <p class="mt-3 text-xs leading-relaxed text-slate-600">
+                        Anda dapat memantau status laporan (Menunggu, Diproses, Selesai, atau Ditolak) secara berkala melalui menu dashboard akun Anda.
                     </p>
                 </details>
             </div>
@@ -439,40 +482,88 @@
     <footer class="border-t border-slate-800 bg-slate-950 pt-16 pb-12 text-slate-300">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 gap-10 border-b border-slate-800 pb-12 md:grid-cols-2 lg:grid-cols-5">
-                <!-- Brand & Deskripsi (2 Kolom di Layar Besar) -->
+                <!-- Brand & Deskripsi -->
                 <div class="space-y-4 lg:col-span-2">
                     <div class="flex items-center gap-3">
-                        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 font-bold text-slate-950 shadow-lg">
-                            ER
+                        <div class="flex size-10 items-center justify-center overflow-hidden rounded-2xl">
+                            <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-full w-full object-cover">
                         </div>
                         <div>
-                            <span class="text-xl font-bold tracking-tight text-white">EcoRisk</span>
-                            <span class="ml-2 inline-block rounded-full border border-emerald-800 bg-emerald-950 px-2.5 py-0.5 text-[10px] font-bold text-emerald-300">
-                            </span>
+                            <span class="text-xl font-bold tracking-tight text-white-900">Eco<span class="text-emerald-600">Risk</span></span>
                         </div>
                     </div>
                     <p class="max-w-sm text-xs leading-relaxed text-slate-400">
-                        Platform tata kelola lingkungan dan mitigasi risiko limbah berbasis partisipasi warga
-                        terintegrasi untuk mewujudkan Kelurahan yang bersih, hijau, dan tangguh.
+                        Platform tata kelola lingkungan dan mitigasi risiko limbah berbasis partisipasi warga terintegrasi untuk mewujudkan kelurahan yang bersih, hijau, dan tangguh.
                     </p>
+                    <!-- Social Media Links pakai Font Awesome -->
                     <div class="flex items-center gap-3 pt-2">
                         <a
                             href="#"
                             class="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-800 bg-slate-900 text-slate-400 transition-colors hover:border-emerald-500/50 hover:text-emerald-400"
-                            aria-label="Facebook"
-                        >
-                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                            </svg>
+                            aria-label="Facebook">
+                            <i class="fa-brands fa-facebook-f text-xs"></i>
                         </a>
                         <a
                             href="#"
                             class="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-800 bg-slate-900 text-slate-400 transition-colors hover:border-emerald-500/50 hover:text-emerald-400"
-                            aria-label="Instagram"
-                        >
-                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07
+                            aria-label="Instagram">
+                            <i class="fa-brands fa-instagram text-xs"></i>
+                        </a>
+                        <a
+                            href="#"
+                            class="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-800 bg-slate-900 text-slate-400 transition-colors hover:border-emerald-500/50 hover:text-emerald-400"
+                            aria-label="Twitter">
+                            <i class="fa-brands fa-twitter text-xs"></i>
+                        </a>
+                        <a
+                            href="#"
+                            class="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-800 bg-slate-900 text-slate-400 transition-colors hover:border-emerald-500/50 hover:text-emerald-400"
+                            aria-label="YouTube">
+                            <i class="fa-brands fa-youtube text-xs"></i>
+                        </a>
+                    </div>
+                </div>
 
+                <!-- Kolom Navigasi 1 -->
+                <div class="space-y-4">
+                    <h4 class="text-xs font-bold tracking-wider text-white uppercase">Navigasi Utama</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="{{ route('home') }}" class="transition hover:text-emerald-400">Beranda</a></li>
+                        <li><a href="#" class="transition hover:text-emerald-400">Peta Risiko Wilayah</a></li>
+                        <li><a href="#" class="transition hover:text-emerald-400">Laporan Publik</a></li>
+                        <li><a href="#" class="transition hover:text-emerald-400">Edukasi & Panduan</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kolom Navigasi 2 -->
+                <div class="space-y-4">
+                    <h4 class="text-xs font-bold tracking-wider text-white uppercase">Peran Pengguna</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="{{ route('login') }}" class="transition hover:text-emerald-400">Portal Warga</a></li>
+                        <li><a href="{{ route('login') }}" class="transition hover:text-emerald-400">Petugas Lapangan</a></li>
+                        <li><a href="{{ route('login') }}" class="transition hover:text-emerald-400">Mitra Daur Ulang</a></li>
+                        <li><a href="{{ route('login') }}" class="transition hover:text-emerald-400">Admin Kelurahan</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kolom Navigasi 3 -->
+                <div class="space-y-4">
+                    <h4 class="text-xs font-bold tracking-wider text-white uppercase">Dukungan & Legal</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="#" class="transition hover:text-emerald-400">Pusat Bantuan</a></li>
+                        <li><a href="#" class="transition hover:text-emerald-400">Kebijakan Privasi</a></li>
+                        <li><a href="#" class="transition hover:text-emerald-400">Syarat & Ketentuan</a></li>
+                        <li><a href="#" class="transition hover:text-emerald-400">Kontak Kami</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bagian Copyright Bawah -->
+            <div class="mt-8 flex flex-col items-center justify-between gap-4 text-xs text-slate-500 sm:flex-row">
+                <p>&copy; {{ date('Y') }} EcoRisk. Seluruh hak cipta dilindungi.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>
