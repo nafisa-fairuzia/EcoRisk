@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layouts.guest', ['title' => 'EcoRisk'])
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EcoRisk</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-
-<body class="bg-slate-50 font-sans text-slate-800 antialiased">
+@section('content')
     <header class="sticky top-0 z-30 border-b border-neutral-200 bg-white/95 backdrop-blur-md">
         <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
             <div class="flex items-center gap-3">
@@ -36,11 +27,9 @@
         </div>
     </header>
 
-    <!-- HERO SECTION -->
     <section class="landing-hero relative isolate flex items-center overflow-hidden px-4 py-8 text-white sm:px-6 sm:py-10 lg:py-12">
         <div class="relative z-10 container mx-auto max-w-7xl px-2 sm:px-6">
             <div class="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-10">
-                <!-- Left Hero Content -->
                 <div class="space-y-4 lg:col-span-7">
                     <span class="inline-block rounded-full border border-emerald-700/50 bg-emerald-800/80 px-3 py-1 text-xs font-semibold tracking-wider text-emerald-200 uppercase">
                         Platform Aksi Lingkungan
@@ -82,7 +71,6 @@
                     </div>
                 </div>
 
-                <!-- Right Glassmorphism Card -->
                 <div class="lg:col-span-5">
                     <div class="space-y-4 rounded-2xl border border-emerald-700/40 bg-emerald-900/40 p-5 shadow-2xl backdrop-blur-md">
                         <div>
@@ -138,7 +126,7 @@
         </div>
     </section>
 
-    <!-- SECTION 1: PERAN KOLABORATIF -->
+
     <section class="bg-white py-20">
         <div class="container mx-auto max-w-7xl px-6">
             <div class="mx-auto mb-12 max-w-2xl text-center">
@@ -151,7 +139,7 @@
             </div>
 
             <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-                <!-- Card 1 -->
+
                 <div class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
                     <div class="space-y-4">
                         <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
@@ -172,7 +160,7 @@
                     </div>
                 </div>
 
-                <!-- Card 2 -->
+
                 <div class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
                     <div class="space-y-4">
                         <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
@@ -193,7 +181,7 @@
                     </div>
                 </div>
 
-                <!-- Card 3 -->
+
                 <div class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
                     <div class="space-y-4">
                         <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
@@ -217,7 +205,7 @@
         </div>
     </section>
 
-    <!-- SECTION 2: PROSES TRANSPARAN (FIXED OVERLAPPING ISSUES) -->
+
     <section class="bg-slate-900 py-20 text-white">
         <div class="container mx-auto max-w-7xl px-6">
             <div class="mx-auto mb-16 max-w-2xl text-center">
@@ -229,7 +217,7 @@
             </div>
 
             <div class="relative grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-                <!-- Step 1 -->
+
                 <div class="relative flex h-full flex-col justify-between rounded-xl border border-slate-700 bg-slate-800/80 p-6">
                     <div>
                         <span class="mb-3 block text-4xl font-extrabold text-slate-600">01</span>
@@ -240,7 +228,7 @@
                     </div>
                 </div>
 
-                <!-- Step 2 -->
+
                 <div class="relative flex h-full flex-col justify-between rounded-xl border border-slate-700 bg-slate-800/80 p-6">
                     <div>
                         <span class="mb-3 block text-4xl font-extrabold text-slate-600">02</span>
@@ -252,7 +240,7 @@
                     </div>
                 </div>
 
-                <!-- Step 3 -->
+
                 <div class="relative flex h-full flex-col justify-between rounded-xl border border-slate-700 bg-slate-800/80 p-6">
                     <div>
                         <span class="mb-3 block text-4xl font-extrabold text-slate-600">03</span>
@@ -264,7 +252,7 @@
                     </div>
                 </div>
 
-                <!-- Step 4 -->
+
                 <div class="relative flex h-full flex-col justify-between rounded-xl border border-slate-700 bg-slate-800/80 p-6">
                     <div>
                         <span class="mb-3 block text-4xl font-extrabold text-slate-600">04</span>
@@ -279,11 +267,11 @@
         </div>
     </section>
 
-    <!-- SECTION 3: CAPAIAN KEBERSIHAN -->
+
     <section class="bg-slate-50 py-20">
         <div class="container mx-auto max-w-7xl px-6">
             <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
-                <!-- Left Title & CTA -->
+
                 <div class="space-y-4 lg:col-span-5">
                     <span class="rounded-full border border-emerald-200 bg-emerald-100 px-3 py-1 text-xs font-bold tracking-wider text-emerald-700 uppercase">
                         DAMPAK TERUKUR
@@ -302,7 +290,7 @@
                     </div>
                 </div>
 
-                <!-- Right Metric Grid -->
+
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-7">
                     <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                         <span class="text-3xl font-extrabold text-emerald-600">1,240+ <span class="text-base font-medium text-slate-500">kg</span></span>
@@ -332,7 +320,7 @@
         </div>
     </section>
 
-    <!-- SECTION 4: TESTIMONIALS -->
+
     <section class="bg-white py-20">
         <div class="container mx-auto max-w-7xl px-6">
             <div class="mx-auto mb-12 max-w-2xl text-center">
@@ -344,7 +332,7 @@
             </div>
 
             <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-                <!-- Testimonial 1 -->
+
                 <div class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50 p-6">
                     <p class="text-xs leading-relaxed text-slate-600 italic">
                         "Dulu tumpukan sampah di pojok RT 03 sering dibiarkan berminggu-minggu. Sejak pakai EcoRisk,
@@ -361,7 +349,7 @@
                     </div>
                 </div>
 
-                <!-- Testimonial 2 -->
+
                 <div class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50 p-6">
                     <p class="text-xs leading-relaxed text-slate-600 italic">
                         "Aplikasi ini sangat bagus. Aku suka fitur skor risikonya karena jadi bisa tahu daerah mana yang
@@ -378,7 +366,7 @@
                     </div>
                 </div>
 
-                <!-- Testimonial 3 -->
+
                 <div class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50 p-6">
                     <p class="text-xs leading-relaxed text-slate-600 italic">
                         "Sebagai warga biasa, saya merasa suara dan keluhan kami cepat ditanggapi. Transparansi grafik
@@ -398,7 +386,7 @@
         </div>
     </section>
 
-    <!-- SECTION 5: FAQ -->
+
     <section class="border-t border-slate-200 bg-slate-50 py-20">
         <div class="container mx-auto max-w-4xl px-6">
             <div class="mb-12 text-center">
@@ -410,7 +398,7 @@
             </div>
 
             <div class="space-y-4">
-                <!-- FAQ 1 -->
+
                 <details class="group [&_summary::-webkit-details-marker]:hidden rounded-xl border border-slate-200 bg-white p-5">
                     <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-800">
                         <span>Apakah saya harus membayar untuk membuat akun warga?</span>
@@ -421,7 +409,7 @@
                     </p>
                 </details>
 
-                <!-- FAQ 2 -->
+
                 <details class="group [&_summary::-webkit-details-marker]:hidden rounded-xl border border-slate-200 bg-white p-5">
                     <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-800">
                         <span>Bagaimana skor risiko sampah dihitung oleh sistem?</span>
@@ -432,7 +420,7 @@
                     </p>
                 </details>
 
-                <!-- FAQ 3 -->
+
                 <details class="group [&_summary::-webkit-details-marker]:hidden rounded-xl border border-slate-200 bg-white p-5">
                     <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-800">
                         <span>Bagaimana cara melaporkan penumpukan sampah liar di sekitar lingkungan saya?</span>
@@ -443,7 +431,7 @@
                     </p>
                 </details>
 
-                <!-- FAQ 4 -->
+
                 <details class="group [&_summary::-webkit-details-marker]:hidden rounded-xl border border-slate-200 bg-white p-5">
                     <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-800">
                         <span>Apakah laporan yang saya kirimkan bersifat anonim atau dapat dilihat publik?</span>
@@ -454,7 +442,7 @@
                     </p>
                 </details>
 
-                <!-- FAQ 5 -->
+
                 <details class="group [&_summary::-webkit-details-marker]:hidden rounded-xl border border-slate-200 bg-white p-5">
                     <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-800">
                         <span>Berapa lama waktu yang dibutuhkan hingga laporan ditindaklanjuti?</span>
@@ -465,7 +453,7 @@
                     </p>
                 </details>
 
-                <!-- FAQ 6 -->
+
                 <details class="group [&_summary::-webkit-details-marker]:hidden rounded-xl border border-slate-200 bg-white p-5">
                     <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-slate-800">
                         <span>Bagaimana cara mengetahui status perkembangan laporan saya?</span>
@@ -478,11 +466,11 @@
             </div>
         </div>
     </section>
-    <!-- FOOTER SECTION -->
+
     <footer class="border-t border-slate-800 bg-slate-950 pt-16 pb-12 text-slate-300">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 gap-10 border-b border-slate-800 pb-12 md:grid-cols-2 lg:grid-cols-5">
-                <!-- Brand & Deskripsi -->
+
                 <div class="space-y-4 lg:col-span-2">
                     <div class="flex items-center gap-3">
                         <div class="flex size-10 items-center justify-center overflow-hidden rounded-2xl">
@@ -495,7 +483,7 @@
                     <p class="max-w-sm text-xs leading-relaxed text-slate-400">
                         Platform tata kelola lingkungan dan mitigasi risiko limbah berbasis partisipasi warga terintegrasi untuk mewujudkan kelurahan yang bersih, hijau, dan tangguh.
                     </p>
-                    <!-- Social Media Links pakai Font Awesome -->
+
                     <div class="flex items-center gap-3 pt-2">
                         <a
                             href="#"
@@ -524,7 +512,7 @@
                     </div>
                 </div>
 
-                <!-- Kolom Navigasi 1 -->
+
                 <div class="space-y-4">
                     <h4 class="text-xs font-bold tracking-wider text-white uppercase">Navigasi Utama</h4>
                     <ul class="space-y-2.5 text-xs text-slate-400">
@@ -535,7 +523,7 @@
                     </ul>
                 </div>
 
-                <!-- Kolom Navigasi 2 -->
+
                 <div class="space-y-4">
                     <h4 class="text-xs font-bold tracking-wider text-white uppercase">Peran Pengguna</h4>
                     <ul class="space-y-2.5 text-xs text-slate-400">
@@ -546,7 +534,7 @@
                     </ul>
                 </div>
 
-                <!-- Kolom Navigasi 3 -->
+
                 <div class="space-y-4">
                     <h4 class="text-xs font-bold tracking-wider text-white uppercase">Dukungan & Legal</h4>
                     <ul class="space-y-2.5 text-xs text-slate-400">
@@ -558,12 +546,10 @@
                 </div>
             </div>
 
-            <!-- Bagian Copyright Bawah -->
+
             <div class="mt-8 flex flex-col items-center justify-between gap-4 text-xs text-slate-500 sm:flex-row">
                 <p>&copy; {{ date('Y') }} EcoRisk. Seluruh hak cipta dilindungi.</p>
             </div>
         </div>
     </footer>
-</body>
-
-</html>
+@endsection

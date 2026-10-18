@@ -2,11 +2,9 @@
 
 @section('content')
 <div class="space-y-5">
-    <!-- Header Petugas -->
     <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
 
-            <!-- Sisi Kiri: Profil & Info Petugas -->
             <div class="flex items-center gap-4">
                 <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-base font-bold text-emerald-800">
                     {{ auth()->user()->initials }}

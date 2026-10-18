@@ -10,42 +10,41 @@
 
 <body class="auth-page font-sans text-slate-800 antialiased">
     <main class="auth-panel auth-panel--narrow grid overflow-hidden lg:grid-cols-[0.92fr_1.08fr]">
-        <aside class="auth-visual relative hidden min-h-full flex-col justify-between overflow-hidden p-8 text-white sm:p-10 lg:flex">
+        <aside class="auth-visual relative flex min-h-[220px] flex-col justify-between overflow-hidden p-5 text-white sm:min-h-[260px] sm:p-8 lg:min-h-full lg:p-10">
             <div class="absolute -right-20 -top-20 size-72 rounded-full border border-white/15"></div>
             <div class="absolute -bottom-28 -left-20 size-80 rounded-full border border-white/15"></div>
 
             <a href="{{ route('home') }}" class="relative inline-flex items-center gap-3">
-                <span class="flex size-11 items-center justify-center rounded-2xl bg-white/15 font-extrabold shadow-lg ring-1 ring-white/30 backdrop-blur-md">ER</span>
+                <span class="flex size-10 items-center justify-center overflow-hidden rounded-2xl">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo EcoRisk" class="h-full w-full object-cover">
+                </span>
                 <span class="text-lg font-extrabold tracking-tight">EcoRisk</span>
             </a>
 
-            <div class="relative max-w-md space-y-6">
-                <span class="inline-flex items-center gap-2 rounded-full border border-emerald-100/25 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-emerald-50 shadow-sm backdrop-blur-md">
+            <div class="relative max-w-md space-y-4 sm:space-y-6">
+                <span class="inline-flex items-center gap-2 rounded-full border border-emerald-100/25 bg-white/10 px-3.5 py-1.5 text-[10px] font-semibold text-emerald-50 shadow-sm backdrop-blur-md sm:text-xs">
                     <span class="size-2 rounded-full bg-emerald-300"></span>
                     Bersama menjaga lingkungan
                 </span>
-                <h1 class="text-4xl font-extrabold leading-tight tracking-tight drop-shadow-md xl:text-5xl">
+                <h1 class="text-2xl font-extrabold leading-tight tracking-tight drop-shadow-md sm:text-3xl xl:text-5xl">
                     Lingkungan bersih dimulai dari kepedulian kita.
                 </h1>
-                <p class="max-w-sm text-sm leading-7 text-emerald-50/90">
+                <p class="max-w-sm text-xs leading-6 text-emerald-50/90 sm:text-sm sm:leading-7">
                     Sampaikan laporan, lihat perkembangannya, dan ikut membangun lingkungan yang lebih sehat untuk semua.
                 </p>
-                <div class="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 p-4 text-sm text-white/95 shadow-lg backdrop-blur-md">
+                <div class="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 p-3 text-sm text-white/95 shadow-lg backdrop-blur-md sm:p-4">
                     <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-300/20 text-emerald-100" aria-hidden="true">
                         <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.2" stroke-width="1.8"/></svg>
                     </span>
-                    <span><span class="block font-bold">Laporan lebih terarah</span><span class="mt-0.5 block text-xs text-emerald-50/75">Pilih lokasi dan pantau tindak lanjutnya.</span></span>
+                    <span><span class="block font-bold">Laporan lebih terarah</span><span class="mt-0.5 block text-[11px] text-emerald-50/75 sm:text-xs">Pilih lokasi dan pantau tindak lanjutnya.</span></span>
                 </div>
             </div>
 
-            <p class="relative text-xs font-medium text-emerald-50/75">Satu langkah kecil, dampak nyata untuk sekitar.</p>
+            <p class="relative text-[11px] font-medium text-emerald-50/75 sm:text-xs">Satu langkah kecil, dampak nyata untuk sekitar.</p>
         </aside>
 
         <section class="p-6 sm:p-10 lg:p-12 xl:p-14">
-            <div class="mb-8 flex items-center gap-3 lg:hidden">
-                <span class="flex size-10 items-center justify-center rounded-xl bg-emerald-700 font-extrabold text-white">ER</span>
-                <span class="text-lg font-extrabold tracking-tight text-slate-900">EcoRisk</span>
-            </div>
+           
 
             <div class="mb-8">
                 <p class="text-sm font-bold uppercase tracking-[0.16em] text-emerald-700">Selamat datang kembali</p>
@@ -89,10 +88,6 @@
                             <svg data-password-eye-open class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" />
                                 <circle cx="12" cy="12" r="2.5" stroke-width="1.8" />
-                            </svg>
-                            <svg data-password-eye-closed class="hidden size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m3 3 18 18M10.6 6.2A10.9 10.9 0 0 1 12 6c6.1 0 9.5 6 9.5 6a16.6 16.6 0 0 1-3.1 3.7M6.2 6.7C3.8 8.2 2.5 12 2.5 12s3.4 6 9.5 6c1.3 0 2.5-.3 3.5-.8" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.9 9.9a3 3 0 0 0 4.2 4.2" />
                             </svg>
                         </button>
                     </div>

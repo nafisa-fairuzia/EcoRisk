@@ -107,10 +107,12 @@ class AuthFlowTest extends TestCase
         $this->actingAs($admin)
             ->get(route('admin.users.index'))
             ->assertOk()
-            ->assertSee('Kelola Pengguna & Mitra')
+            ->assertSee('Kelola Pengguna')
             ->assertSee(route('admin.users.create'), false)
+            ->assertSee(route('admin.users.edit', $managedUser), false)
             ->assertSee('Tambah akun')
             ->assertSee($managedUser->email)
+            ->assertSee('Hapus')
             ->assertSee('Nonaktifkan')
             ->assertDontSee('name="telepon"', false);
     }
@@ -214,6 +216,113 @@ class AuthFlowTest extends TestCase
             'id' => $admin->id,
             'status' => 'Aktif',
         ]);
+    }
+
+    public function test_admin_can_edit_another_user_and_change_their_password(): void
+    {
+        /** @var User $admin */
+        $admin = User::factory()->create(['role' => 'admin']);
+        $managedUser = User::factory()->create(['role' => 'warga']);
+
+        $this->actingAs($admin)
+            ->get(route('admin.users.edit', $managedUser))
+            ->assertOk()
+            ->assertSee('Edit Pengguna')
+            ->assertSee($managedUser->email);
+
+        $this->put(route('admin.users.update', $managedUser), [
+            'name' => 'Petugas Baru',
+            'email' => 'petugas.baru@example.test',
+            'role' => 'petugas',
+            'zona_wilayah' => 'Zona Barat',
+            'alamat' => 'Jalan Melati 5',
+            'telepon' => '081234567890',
+            'status' => 'Aktif',
+            'password' => 'updated-password-123',
+            'password_confirmation' => 'updated-password-123',
+        ])
+            ->assertRedirect(route('admin.users.index'))
+            ->assertSessionHas('success');
+
+        $managedUser->refresh();
+
+        $this->assertSame('Petugas Baru', $managedUser->name);
+        $this->assertSame('petugas.baru@example.test', $managedUser->email);
+        $this->assertSame('petugas', $managedUser->role);
+        $this->assertSame('Zona Barat', $managedUser->zona_wilayah);
+        $this->assertSame('Jalan Melati 5', $managedUser->alamat);
+        $this->assertSame('081234567890', $managedUser->telepon);
+        $this->assertTrue(Hash::check('updated-password-123', $managedUser->password));
+    }
+
+    public function test_admin_cannot_change_their_own_role_or_status_from_user_edit(): void
+    {
+        /** @var User $admin */
+        $admin = User::factory()->create(['role' => 'admin', 'status' => 'Aktif']);
+
+        $this->actingAs($admin)
+            ->put(route('admin.users.update', $admin), [
+                'name' => $admin->name,
+                'email' => $admin->email,
+                'role' => 'warga',
+                'status' => 'Nonaktif',
+            ])
+            ->assertRedirect()
+            ->assertSessionHasErrors(['role', 'status']);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $admin->id,
+            'role' => 'admin',
+            'status' => 'Aktif',
+        ]);
+    }
+
+    public function test_admin_can_delete_another_user_and_their_reports(): void
+    {
+        /** @var User $admin */
+        $admin = User::factory()->create(['role' => 'admin']);
+        $managedUser = User::factory()->create(['role' => 'warga']);
+        $report = WasteReport::create([
+            'user_id' => $managedUser->id,
+            'address' => 'Lokasi yang dilaporkan',
+            'description' => 'Laporan milik akun yang akan dihapus.',
+        ]);
+
+        $this->actingAs($admin)
+            ->delete(route('admin.users.destroy', $managedUser))
+            ->assertRedirect(route('admin.users.index'))
+            ->assertSessionHas('success');
+
+        $this->assertDatabaseMissing('users', ['id' => $managedUser->id]);
+        $this->assertDatabaseMissing('waste_reports', ['id' => $report->id]);
+    }
+
+    public function test_admin_cannot_delete_their_own_account(): void
+    {
+        /** @var User $admin */
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)
+            ->delete(route('admin.users.destroy', $admin))
+            ->assertRedirect()
+            ->assertSessionHasErrors('user');
+
+        $this->assertDatabaseHas('users', ['id' => $admin->id]);
+    }
+
+    public function test_non_admin_cannot_edit_or_delete_managed_users(): void
+    {
+        $warga = User::factory()->create(['role' => 'warga']);
+        $managedUser = User::factory()->create();
+
+        $this->actingAs($warga)
+            ->get(route('admin.users.edit', $managedUser))
+            ->assertForbidden();
+
+        $this->delete(route('admin.users.destroy', $managedUser))
+            ->assertForbidden();
+
+        $this->assertDatabaseHas('users', ['id' => $managedUser->id]);
     }
 
     public function test_admin_can_create_a_petugas_assigned_to_a_zone(): void
@@ -494,13 +603,17 @@ class AuthFlowTest extends TestCase
             'profile_photo_path' => 'profile-photos/old-avatar.jpg',
         ]);
 
-        $this->actingAs($user)
+        $response = $this->actingAs($user)
             ->get(route('profile.edit'))
             ->assertOk()
             ->assertSee('data-password-toggle', false)
             ->assertSee('data-profile-photo-input', false)
             ->assertSee('data-profile-photo-preview', false)
+            ->assertSee(Storage::disk('public')->url($user->profile_photo_path), false)
+            ->assertSee('data-user-avatar-fallback', false)
             ->assertSee('Foto baru disimpan setelah Anda menekan tombol Simpan Perubahan.');
+
+        $this->assertSame(2, substr_count($response->getContent(), 'data-user-avatar-image'));
 
         $this->from(route('profile.edit'))
             ->put(route('profile.update'), [

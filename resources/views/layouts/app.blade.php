@@ -80,13 +80,9 @@
 
                         <details class="group relative">
                             <summary class="flex cursor-pointer list-none items-center gap-2 rounded-2xl border border-slate-200 bg-white p-1.5 pr-2.5 shadow-sm transition hover:border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                                @if (auth()->user()->profile_photo_url)
-                                <img src="{{ auth()->user()->profile_photo_url }}" alt="Foto profil {{ auth()->user()->name }}" class="size-9 rounded-xl object-cover" />
-                                @else
-                                <span class="flex size-9 items-center justify-center rounded-xl bg-emerald-700 text-xs font-extrabold text-white">
-                                    {{ auth()->user()->initials }}
-                                </span>
-                                @endif
+                                <x-user-avatar
+                                    :user="auth()->user()"
+                                    class="size-9 rounded-xl bg-emerald-700 text-xs font-extrabold text-white" />
                                 <span class="hidden max-w-36 text-left sm:block">
                                     <span class="block truncate text-xs font-bold text-slate-800">{{ auth()->user()->name }}</span>
                                     <span class="block text-[10px] font-medium text-slate-500">{{ auth()->user()->roleLabel }}</span>

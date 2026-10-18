@@ -96,10 +96,6 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" />
                             <circle cx="12" cy="12" r="2.5" stroke-width="1.8" />
                         </svg>
-                        <svg data-password-eye-closed class="hidden size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m3 3 18 18M10.6 6.2A10.9 10.9 0 0 1 12 6c6.1 0 9.5 6 9.5 6a16.6 16.6 0 0 1-3.1 3.7M6.2 6.7C3.8 8.2 2.5 12 2.5 12s3.4 6 9.5 6c1.3 0 2.5-.3 3.5-.8" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.9 9.9a3 3 0 0 0 4.2 4.2" />
-                        </svg>
                     </button>
                 </div>
                 @error('current_password')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
@@ -114,10 +110,6 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" />
                                 <circle cx="12" cy="12" r="2.5" stroke-width="1.8" />
                             </svg>
-                            <svg data-password-eye-closed class="hidden size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m3 3 18 18M10.6 6.2A10.9 10.9 0 0 1 12 6c6.1 0 9.5 6 9.5 6a16.6 16.6 0 0 1-3.1 3.7M6.2 6.7C3.8 8.2 2.5 12 2.5 12s3.4 6 9.5 6c1.3 0 2.5-.3 3.5-.8" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.9 9.9a3 3 0 0 0 4.2 4.2" />
-                            </svg>
                         </button>
                     </div>
                     @error('password')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
@@ -130,10 +122,6 @@
                             <svg data-password-eye-open class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" />
                                 <circle cx="12" cy="12" r="2.5" stroke-width="1.8" />
-                            </svg>
-                            <svg data-password-eye-closed class="hidden size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m3 3 18 18M10.6 6.2A10.9 10.9 0 0 1 12 6c6.1 0 9.5 6 9.5 6a16.6 16.6 0 0 1-3.1 3.7M6.2 6.7C3.8 8.2 2.5 12 2.5 12s3.4 6 9.5 6c1.3 0 2.5-.3 3.5-.8" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.9 9.9a3 3 0 0 0 4.2 4.2" />
                             </svg>
                         </button>
                     </div>

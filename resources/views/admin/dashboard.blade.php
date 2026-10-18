@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="space-y-5">
-    <!-- Header Banner Card -->
     <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div class="flex items-center gap-4">
@@ -38,9 +37,7 @@
         </div>
     </div>
 
-    <!-- 4 Metrik Kartu -->
     <div class="grid grid-cols-2 gap-3.5 lg:grid-cols-4">
-        <!-- Card 1 -->
         <div class="flex items-center justify-between rounded-2xl bg-white p-4 shadow-xs transition hover:shadow-md">
             <div>
                 <span class="text-[11px] font-bold tracking-wider uppercase text-slate-400">Penyelesaian</span>
@@ -54,7 +51,6 @@
             </div>
         </div>
 
-        <!-- Card 2 -->
         <div class="flex items-center justify-between rounded-2xl bg-white p-4 shadow-xs transition hover:shadow-md">
             <div>
                 <span class="text-[11px] font-bold tracking-wider uppercase text-slate-400">Petugas Lapangan</span>
@@ -68,7 +64,6 @@
             </div>
         </div>
 
-        <!-- Card 3 -->
         <div class="flex items-center justify-between rounded-2xl bg-white p-4 shadow-xs transition hover:shadow-md">
             <div>
                 <span class="text-[11px] font-bold tracking-wider uppercase text-slate-400">Sampah Terpilah</span>
@@ -82,7 +77,6 @@
             </div>
         </div>
 
-        <!-- Card 4 -->
         <div class="flex items-center justify-between rounded-2xl bg-white p-4 shadow-xs transition hover:shadow-md">
             <div>
                 <span class="text-[11px] font-bold tracking-wider uppercase text-slate-400">Emisi Dicegah</span>
@@ -114,7 +108,7 @@
     @endphp
 
     <div class="grid gap-4 lg:grid-cols-3">
-        <!-- Kolom Kiri: Chart Donut Mini (Tanpa JS, Bersih dari Error CSS) -->
+
         <div class="flex flex-col items-center justify-center gap-3 rounded-2xl bg-white p-4 shadow-xs">
             <div class="w-full text-center lg:text-left">
                 <h2 class="text-xs font-bold uppercase tracking-wider text-slate-600">Proporsi Penyaluran</h2>
@@ -171,7 +165,6 @@
             </div>
         </div>
 
-        <!-- Kolom Kanan: Rincian Saluran -->
         <div class="rounded-2xl bg-white p-4 shadow-xs lg:col-span-2">
             <div class="mb-3 border-b border-slate-100 pb-2">
                 <h2 class="text-xs font-bold uppercase tracking-wider text-slate-600">Rincian Saluran Daur Ulang</h2>
@@ -207,7 +200,6 @@
         </div>
     </div>
 
-    <!-- Tabel Monitoring Aduan Wilayah -->
     <div class="border border-neutral-200 bg-white shadow-xs">
         <div class="flex items-center justify-between border-b border-neutral-100 p-5">
             <h2 class="text-base font-bold text-neutral-900">Rekap Aduan Sampah Seluruh Wilayah</h2>

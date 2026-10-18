@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Transparansi Dampak Lingkungan - EcoRisk</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
+@extends('layouts.guest', ['title' => 'Transparansi Dampak Lingkungan - EcoRisk'])
 
-<body class="min-h-screen bg-slate-50 font-sans text-slate-800 antialiased">
+@section('content')
     <header class="border-b border-neutral-200 bg-white">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
             <a href="{{ route('home') }}" class="text-lg font-bold text-emerald-800">EcoRisk</a>
@@ -121,5 +114,4 @@
             Statistik dihitung dari catatan pemilahan yang tersimpan di sistem.
         </div>
     </footer>
-</body>
-</html>
+@endsection

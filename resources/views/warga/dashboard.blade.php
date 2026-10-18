@@ -4,7 +4,7 @@
 <div class="space-y-6">
     @if ($section === 'dashboard')
     <section class="space-y-5">
-        <div class="mb-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
             <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div class="flex items-center gap-4">
                     <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 font-bold text-emerald-800">
@@ -12,8 +12,8 @@
                     </div>
                     <div>
                         <div class="flex flex-wrap items-center gap-2">
-                            <h1 class="text-lg font-bold text-slate-900">Dashboard Warga</h1>
-                            <span class="rounded-md bg-emerald-100 px-2 py-0.5 text-xs font-bold text-emerald-800">
+                            <h1 class="text-xl font-bold text-slate-900">Dashboard Warga</h1>
+                            <span class="rounded-md border border-emerald-200/60 bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-700">
                                 {{ auth()->user()->zona_wilayah ?? 'Warga Sukamaju' }}
                             </span>
                         </div>
@@ -24,56 +24,95 @@
                 </div>
 
                 <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-3 lg:border-t-0 lg:pt-0">
-                    <div class="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600">
+                    <div class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-1.5 text-xs font-semibold text-slate-600">
+                        <i class="fa-solid fa-calendar-days text-xs text-emerald-600"></i>
                         {{ now()->translatedFormat('l, d F Y') }}
                     </div>
                     <a
                         href="{{ route('warga.dashboard', ['section' => 'create']) }}"
-                        class="inline-flex items-center gap-2 rounded-xl bg-emerald-700 px-4 py-2 text-xs font-bold text-white transition hover:bg-emerald-800 active:scale-95">Buat Laporan</a>
+                        class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition hover:bg-emerald-700 active:scale-95">
+                        <i class="fa-solid fa-plus"></i>
+                        Buat Laporan
+                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            <a href="{{ route('warga.dashboard', ['section' => 'reports']) }}" class="rounded-xl border border-neutral-200 bg-white p-4 transition hover:border-emerald-300">
-                <p class="text-xs font-semibold text-neutral-500">Total laporan</p>
-                <p class="mt-2 text-2xl font-bold text-neutral-900">{{ $totalMyReports }}</p>
-            </a>
-            <a href="{{ route('warga.dashboard', ['section' => 'reports']) }}" class="rounded-xl border border-amber-200 bg-amber-50 p-4 transition hover:border-amber-400">
-                <p class="text-xs font-semibold text-amber-800">Menunggu</p>
-                <p class="mt-2 text-2xl font-bold text-amber-950">{{ $pendingCount }}</p>
-            </a>
-            <a href="{{ route('warga.dashboard', ['section' => 'reports']) }}" class="rounded-xl border border-blue-200 bg-blue-50 p-4 transition hover:border-blue-400">
-                <p class="text-xs font-semibold text-blue-800">Sedang ditangani</p>
-                <p class="mt-2 text-2xl font-bold text-blue-950">{{ $inProgressCount }}</p>
-            </a>
-            <a href="{{ route('warga.dashboard', ['section' => 'reports']) }}" class="rounded-xl border border-emerald-200 bg-emerald-50 p-4 transition hover:border-emerald-400">
-                <p class="text-xs font-semibold text-emerald-800">Selesai ditangani</p>
-                <p class="mt-2 text-2xl font-bold text-emerald-950">{{ $completedCount }}</p>
-            </a>
-        </div>
+        <section class="space-y-3" aria-labelledby="resident-report-summary">
+            <h2 id="resident-report-summary" class="text-xs font-bold uppercase tracking-wider text-slate-600">Ringkasan laporan</h2>
+            <div class="grid grid-cols-2 gap-3.5 lg:grid-cols-4">
+                <a href="{{ route('warga.dashboard', ['section' => 'reports']) }}" class="flex items-center justify-between gap-2 rounded-2xl bg-white p-4 shadow-xs transition hover:shadow-md">
+                    <div>
+                        <span class="text-[11px] font-bold tracking-wider uppercase text-slate-400">Total Laporan</span>
+                        <div class="mt-1 flex items-baseline gap-1.5">
+                            <span class="font-mono text-2xl font-extrabold text-emerald-600">{{ $totalMyReports }}</span>
+                            <span class="text-[11px] font-medium text-slate-400">laporan</span>
+                        </div>
+                    </div>
+                    <div class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                        <i class="fa-solid fa-file-lines text-base"></i>
+                    </div>
+                </a>
+                <a href="{{ route('warga.dashboard', ['section' => 'reports']) }}" class="flex items-center justify-between gap-2 rounded-2xl bg-white p-4 shadow-xs transition hover:shadow-md">
+                    <div>
+                        <span class="text-[11px] font-bold tracking-wider uppercase text-slate-400">Menunggu</span>
+                        <div class="mt-1 flex items-baseline gap-1.5">
+                            <span class="font-mono text-2xl font-extrabold text-amber-600">{{ $pendingCount }}</span>
+                            <span class="text-[11px] font-medium text-slate-400">laporan</span>
+                        </div>
+                    </div>
+                    <div class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+                        <i class="fa-solid fa-clock text-base"></i>
+                    </div>
+                </a>
+                <a href="{{ route('warga.dashboard', ['section' => 'reports']) }}" class="flex items-center justify-between gap-2 rounded-2xl bg-white p-4 shadow-xs transition hover:shadow-md">
+                    <div>
+                        <span class="text-[11px] font-bold tracking-wider uppercase text-slate-400">Ditangani</span>
+                        <div class="mt-1 flex items-baseline gap-1.5">
+                            <span class="font-mono text-2xl font-extrabold text-sky-600">{{ $inProgressCount }}</span>
+                            <span class="text-[11px] font-medium text-slate-400">laporan</span>
+                        </div>
+                    </div>
+                    <div class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sky-600">
+                        <i class="fa-solid fa-truck-fast text-base"></i>
+                    </div>
+                </a>
+                <a href="{{ route('warga.dashboard', ['section' => 'reports']) }}" class="flex items-center justify-between gap-2 rounded-2xl bg-white p-4 shadow-xs transition hover:shadow-md">
+                    <div>
+                        <span class="text-[11px] font-bold tracking-wider uppercase text-slate-400">Selesai</span>
+                        <div class="mt-1 flex items-baseline gap-1.5">
+                            <span class="font-mono text-2xl font-extrabold text-emerald-600">{{ $completedCount }}</span>
+                            <span class="text-[11px] font-medium text-slate-400">laporan</span>
+                        </div>
+                    </div>
+                    <div class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                        <i class="fa-solid fa-circle-check text-base"></i>
+                    </div>
+                </a>
+            </div>
+        </section>
 
-        <section class="rounded-xl border border-neutral-200 bg-white p-5" aria-labelledby="latest-report-heading">
+        <section class="space-y-3" aria-labelledby="latest-report-heading">
             <div class="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                    <h2 id="latest-report-heading" class="text-base font-bold text-neutral-900">Pantau laporan terakhir</h2>
-                    <p class="mt-1 text-sm text-neutral-500">Lihat perkembangan dan tindak lanjut yang bisa Anda lakukan.</p>
+                    <h2 id="latest-report-heading" class="text-xs font-bold uppercase tracking-wider text-slate-600">Pantau laporan terakhir</h2>
+                    <p class="mt-1 text-xs text-slate-500">Lihat perkembangan dan tindak lanjut yang bisa Anda lakukan.</p>
                 </div>
-                <a href="{{ route('warga.dashboard', ['section' => 'reports']) }}" class="text-sm font-semibold text-emerald-800 hover:text-emerald-950">Semua laporan</a>
+                <a href="{{ route('warga.dashboard', ['section' => 'reports']) }}" class="text-xs font-bold text-emerald-700 hover:text-emerald-900">Semua laporan <span aria-hidden="true">→</span></a>
             </div>
 
             @if ($latestReport)
-            <div class="mt-4 flex flex-col justify-between gap-4 border-t border-neutral-100 pt-4 sm:flex-row sm:items-center">
-                <div class="space-y-1">
-                    <p class="font-mono text-sm font-bold text-neutral-900">{{ $latestReport->kode_laporan ?: 'Laporan #'.$latestReport->id }}</p>
-                    <p class="text-sm text-neutral-700">{{ $latestReport->alamat ?: $latestReport->address }}</p>
-                    <p class="text-xs text-neutral-500">
+            <div class="flex flex-col justify-between gap-4 rounded-2xl bg-white p-4 shadow-xs transition hover:shadow-md sm:flex-row sm:items-center sm:p-5">
+                <div class="min-w-0 space-y-1.5">
+                    <p class="font-mono text-sm font-bold text-slate-800">{{ $latestReport->kode_laporan ?: 'Laporan #'.$latestReport->id }}</p>
+                    <p class="break-words text-sm text-slate-600">{{ $latestReport->alamat ?: $latestReport->address }}</p>
+                    <p class="flex flex-wrap items-center gap-1.5 text-xs text-slate-500">
                         Status:
                         <x-report-badge type="status" :value="$latestReport->status" :label="$latestReport->status_label" />
-                        · Diperbarui {{ ($latestReport->tanggal_update_status ?? $latestReport->updated_at)->diffForHumans() }}
+                        <span>· Diperbarui {{ ($latestReport->tanggal_update_status ?? $latestReport->updated_at)->diffForHumans() }}</span>
                     </p>
                 </div>
-                <div class="flex shrink-0 flex-wrap gap-2">
+                <div class="flex shrink-0 flex-wrap gap-2 sm:justify-end">
                     <a href="{{ route('warga.laporan.show', $latestReport) }}" class="rounded-lg border border-neutral-300 px-3 py-2 text-sm font-semibold text-neutral-700 hover:bg-neutral-50">Detail</a>
                     @if ($latestReport->canBeEditedByResident())
                     <a href="{{ route('warga.laporan.edit', $latestReport) }}" class="rounded-lg bg-emerald-700 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-800">Perbarui aduan</a>
@@ -81,10 +120,10 @@
                 </div>
             </div>
             @else
-            <div class="mt-4 flex flex-col gap-4 border-t border-neutral-100 pt-4 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                    <p class="text-sm font-semibold text-neutral-800">Belum ada aduan yang perlu dipantau.</p>
-                    <p class="mt-1 text-sm text-neutral-500">Tandai lokasi di peta, jelaskan jenis sampah, lalu lampirkan foto agar petugas lebih mudah menindaklanjuti.</p>
+            <div class="flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-xs sm:flex-row sm:items-center sm:justify-between sm:p-5">
+                <div class="max-w-2xl">
+                    <p class="text-sm font-semibold text-slate-800">Belum ada aduan yang perlu dipantau.</p>
+                    <p class="mt-1 text-sm text-slate-500">Tandai lokasi di peta, jelaskan jenis sampah, lalu lampirkan foto agar petugas lebih mudah menindaklanjuti.</p>
                 </div>
                 <a href="{{ route('warga.dashboard', ['section' => 'create']) }}" class="shrink-0 rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-800">Buat laporan pertama</a>
             </div>

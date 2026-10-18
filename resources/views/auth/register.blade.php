@@ -10,41 +10,38 @@
 
 <body class="auth-page font-sans text-slate-800 antialiased">
     <main class="auth-panel grid overflow-hidden lg:grid-cols-[0.88fr_1.12fr]">
-        <aside class="auth-visual relative hidden flex-col justify-between overflow-hidden p-8 text-white sm:p-10 lg:flex">
+        <aside class="auth-visual relative flex min-h-[220px] flex-col justify-between overflow-hidden p-5 text-white sm:min-h-[260px] sm:p-8 lg:min-h-full lg:p-10">
             <div class="absolute -right-20 -top-20 size-72 rounded-full border border-white/15"></div>
             <div class="absolute -bottom-28 -left-16 size-72 rounded-full border border-white/15"></div>
 
             <a href="{{ route('home') }}" class="relative inline-flex items-center gap-3">
-                <span class="flex size-11 items-center justify-center rounded-2xl bg-white/15 font-extrabold shadow-lg ring-1 ring-white/30 backdrop-blur-md">ER</span>
+                <span class="flex size-10 items-center justify-center overflow-hidden rounded-2xl">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo EcoRisk" class="h-full w-full object-cover">
+                </span>
                 <span class="text-lg font-extrabold tracking-tight">EcoRisk</span>
             </a>
 
-            <div class="relative max-w-md space-y-5">
-                <span class="inline-flex rounded-full border border-emerald-100/25 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-emerald-50 shadow-sm backdrop-blur-md">
+            <div class="relative max-w-md space-y-4 sm:space-y-5">
+                <span class="inline-flex rounded-full border border-emerald-100/25 bg-white/10 px-3.5 py-1.5 text-[10px] font-semibold text-emerald-50 shadow-sm backdrop-blur-md sm:text-xs">
                     Komunitas peduli lingkungan
                 </span>
-                <h1 class="text-4xl font-extrabold leading-tight tracking-tight xl:text-5xl">
+                <h1 class="text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl xl:text-5xl">
                     Mari rawat lingkungan, mulai dari sekitar kita.
                 </h1>
-                <p class="text-sm leading-7 text-emerald-50/90">
+                <p class="text-xs leading-6 text-emerald-50/90 sm:text-sm sm:leading-7">
                     Daftarkan akun warga untuk melaporkan masalah, memilih lokasi, dan mengikuti proses penanganannya.
                 </p>
-                <div class="space-y-3 rounded-2xl border border-white/15 bg-white/10 p-4 text-sm text-emerald-50/95 shadow-lg backdrop-blur-md">
+                <div class="space-y-2 rounded-2xl border border-white/15 bg-white/10 p-3 text-xs text-emerald-50/95 shadow-lg backdrop-blur-md sm:space-y-3 sm:p-4 sm:text-sm">
                     <p class="flex items-center gap-3"><span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-white/15 text-xs font-bold">1</span> Tandai lokasi laporan pada peta</p>
                     <p class="flex items-center gap-3"><span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-white/15 text-xs font-bold">2</span> Petugas menerima titik yang akurat</p>
                     <p class="flex items-center gap-3"><span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-white/15 text-xs font-bold">3</span> Pantau pembaruan penanganan</p>
                 </div>
             </div>
 
-            <p class="relative text-xs text-emerald-100/70">Daftar gratis sebagai warga EcoRisk.</p>
+            <p class="relative text-[11px] text-emerald-100/70 sm:text-xs">Daftar gratis sebagai warga EcoRisk.</p>
         </aside>
 
         <section class="p-6 sm:p-9 lg:p-10 xl:p-12">
-            <div class="mb-7 flex items-center gap-3 lg:hidden">
-                <span class="flex size-10 items-center justify-center rounded-xl bg-emerald-700 font-extrabold text-white">ER</span>
-                <span class="text-lg font-extrabold tracking-tight text-slate-900">EcoRisk</span>
-            </div>
-
             <div class="mb-7">
                 <p class="text-sm font-bold uppercase tracking-[0.16em] text-emerald-700">Mulai berkontribusi</p>
                 <h2 class="mt-2 text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">Buat akun warga</h2>
@@ -98,7 +95,6 @@
                             placeholder="Minimal 6 karakter" />
                         <button type="button" data-password-toggle aria-controls="password" aria-label="Tampilkan kata sandi" class="absolute inset-y-0 right-0 inline-flex items-center px-3 text-slate-500 hover:text-emerald-700">
                             <svg data-password-eye-open class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5" stroke-width="1.8"/></svg>
-                            <svg data-password-eye-closed class="hidden size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m3 3 18 18M10.6 6.2A10.9 10.9 0 0 1 12 6c6.1 0 9.5 6 9.5 6a16.6 16.6 0 0 1-3.1 3.7M6.2 6.7C3.8 8.2 2.5 12 2.5 12s3.4 6 9.5 6c1.3 0 2.5-.3 3.5-.8"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
                         </button>
                     </div>
                 </div>
@@ -116,7 +112,6 @@
                             placeholder="Ulangi kata sandi" />
                         <button type="button" data-password-toggle aria-controls="password_confirmation" aria-label="Tampilkan kata sandi" class="absolute inset-y-0 right-0 inline-flex items-center px-3 text-slate-500 hover:text-emerald-700">
                             <svg data-password-eye-open class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5" stroke-width="1.8"/></svg>
-                            <svg data-password-eye-closed class="hidden size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m3 3 18 18M10.6 6.2A10.9 10.9 0 0 1 12 6c6.1 0 9.5 6 9.5 6a16.6 16.6 0 0 1-3.1 3.7M6.2 6.7C3.8 8.2 2.5 12 2.5 12s3.4 6 9.5 6c1.3 0 2.5-.3 3.5-.8"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
                         </button>
                     </div>
                 </div>

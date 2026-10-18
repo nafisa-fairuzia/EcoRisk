@@ -1,10 +1,10 @@
-@extends('layouts.app', ['title' => 'Kelola Pengguna & Mitra'])
+@extends('layouts.app', ['title' => 'Kelola Pengguna'])
 
 @section('content')
 <section class="space-y-5">
     <header class="flex flex-wrap items-end justify-between gap-3">
         <div>
-            <h1 class="text-2xl font-bold text-neutral-900">Kelola Pengguna & Mitra</h1>
+            <h1 class="text-2xl font-bold text-neutral-900">Kelola Pengguna</h1>
         </div>
         <div class="flex items-center gap-3">
             <span class="rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-700">
@@ -50,16 +50,39 @@
                                 </span>
                             </td>
                             <td>
-                                <form method="POST" action="{{ route('admin.users.toggle', $managedUser->id) }}">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button
-                                        type="submit"
-                                        @disabled($managedUser->id === auth()->id())
-                                        class="rounded-lg border px-3 py-2 text-[11px] font-bold transition disabled:cursor-not-allowed disabled:opacity-40 {{ $managedUser->status === 'Aktif' ? 'border-rose-200 text-rose-700 hover:bg-rose-50' : 'border-emerald-200 text-emerald-700 hover:bg-emerald-50' }}">
-                                        {{ $managedUser->status === 'Aktif' ? 'Nonaktifkan' : 'Aktifkan' }}
-                                    </button>
-                                </form>
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('admin.users.edit', $managedUser) }}" class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2 text-[11px] font-bold text-slate-700 transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-800">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                        Edit
+                                    </a>
+
+                                    <form method="POST" action="{{ route('admin.users.toggle', $managedUser->id) }}" class="inline">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button
+                                            type="submit"
+                                            @disabled($managedUser->id === auth()->id())
+                                            class="rounded-lg border px-3 py-2 text-[11px] font-bold transition disabled:cursor-not-allowed disabled:opacity-40 {{ $managedUser->status === 'Aktif' ? 'border-rose-200 text-rose-700 hover:bg-rose-50' : 'border-emerald-200 text-emerald-700 hover:bg-emerald-50' }}">
+                                            {{ $managedUser->status === 'Aktif' ? 'Nonaktifkan' : 'Aktifkan' }}
+                                        </button>
+                                    </form>
+
+                                    <form
+                                        method="POST"
+                                        action="{{ route('admin.users.destroy', $managedUser) }}"
+                                        class="inline"
+                                        onsubmit="return confirm('Hapus akun ini? Semua data terkait, termasuk laporan dan aktivitasnya, juga akan dihapus permanen.');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button
+                                            type="submit"
+                                            @disabled($managedUser->id === auth()->id())
+                                            class="inline-flex items-center gap-1.5 rounded-lg border border-rose-200 px-3 py-2 text-[11px] font-bold text-rose-700 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-40">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty

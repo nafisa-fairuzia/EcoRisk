@@ -68,7 +68,7 @@ $menuItems = match ($currentRole) {
 'active' => request()->routeIs('admin.heatmap'),
 ],
 [
-'label' => 'Kelola Pengguna & Mitra',
+'label' => 'Kelola Pengguna',
 'icon' => 'fa-solid fa-users',
 'href' => route('admin.users.index'),
 'active' => request()->routeIs('admin.users.*'),
@@ -88,7 +88,6 @@ default => [],
         '-translate-x-full': ! sidebarOpen,
     }"
     aria-label="Navigasi utama">
-    <!-- Header Sidebar -->
     <div
         class="flex h-19 items-center justify-between border-b border-slate-100 px-6"
         :class="{ 'lg:justify-center': sidebarCollapsed }">
@@ -112,7 +111,6 @@ default => [],
         </button>
     </div>
 
-    <!-- Body / Navigation -->
     <div class="px-5 pt-6">
         <div class="mb-3 flex items-center justify-between px-3">
             <p
@@ -155,7 +153,6 @@ default => [],
                         : 'text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 font-semibold'
                 }} group flex min-h-11 items-center gap-3 rounded-2xl px-3.5 py-2.5 text-[13px] transition duration-200">
 
-                <!-- Font Awesome Icon -->
                 <span
                     class="flex size-8 shrink-0 items-center justify-center rounded-xl {{ ($item['active'] ?? false) ? 'bg-emerald-100/80 text-emerald-700' : 'bg-slate-100 text-slate-600 group-hover:bg-slate-200/70' }} transition"
                     :title="sidebarCollapsed ? @js($item['label']) : ''">
@@ -195,18 +192,13 @@ default => [],
         </nav>
     </div>
 
-    <!-- Footer Sidebar -->
     <div class="mt-auto p-4">
         <div
             class="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-slate-50 p-3"
             :class="{ 'lg:justify-center': sidebarCollapsed }">
-            @if ($user->profile_photo_url)
-            <img src="{{ $user->profile_photo_url }}" alt="Foto profil {{ $user->name }}" class="size-9 shrink-0 rounded-xl object-cover shadow-sm" />
-            @else
-            <span class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-slate-800 text-xs font-extrabold text-white shadow-sm">
-                {{ $user->initials }}
-            </span>
-            @endif
+            <x-user-avatar
+                :user="$user"
+                class="size-9 rounded-xl bg-slate-800 text-xs font-extrabold text-white shadow-sm" />
             <div :class="sidebarCollapsed ? 'lg:hidden' : ''" class="min-w-0 flex-1">
                 <p class="truncate text-xs font-bold text-slate-800">{{ $user->name }}</p>
                 <span class="mt-0.5 inline-flex rounded-full bg-slate-200/70 px-2 py-0.5 text-[9px] font-bold tracking-wide text-slate-600 capitalize">

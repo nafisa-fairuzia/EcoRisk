@@ -2,7 +2,6 @@
 
 @section('content')
 <section class="mx-auto max-w-6xl space-y-6">
-    <!-- Header Section -->
     <header class="space-y-1">
         <a href="{{ route('admin.users.index') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-600 transition hover:text-emerald-700">
             <i class="fa-solid fa-arrow-left text-xs"></i>
@@ -11,7 +10,6 @@
         <h1 class="text-2xl font-bold text-slate-900">Tambah Akun Operasional</h1>
     </header>
 
-    <!-- Form Card (Full Width Layout) -->
     <div class="rounded-2xl border border-slate-200 bg-white shadow-xs">
         <form 
             method="POST" 
@@ -29,7 +27,6 @@
             @csrf
 
             <div class="grid gap-5 sm:grid-cols-2">
-                <!-- Nama Lengkap -->
                 <div class="sm:col-span-2">
                     <label for="name" class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-600">Nama Lengkap</label>
                     <input 
@@ -47,7 +44,6 @@
                     @enderror
                 </div>
 
-                <!-- Email -->
                 <div>
                     <label for="email" class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-600">Email untuk Masuk</label>
                     <input 
@@ -66,7 +62,6 @@
                     @enderror
                 </div>
 
-                <!-- Peran Akun -->
                 <div>
                     <label for="role" class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-600">Peran Akun</label>
                     <select 
@@ -84,7 +79,6 @@
                     @enderror
                 </div>
 
-                <!-- Zona / Wilayah Tugas -->
                 <div class="sm:col-span-2">
                     <label for="zona_wilayah" class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-600">Zona / Wilayah Tugas</label>
                     <input 
@@ -104,7 +98,6 @@
                     @enderror
                 </div>
 
-                <!-- Kata Sandi Awal -->
                 <div>
                     <label for="password" class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-600">Kata Sandi Awal</label>
                     <div class="relative">
@@ -119,7 +112,6 @@
                             placeholder="Minimal 8 karakter" />
                         <button type="button" data-password-toggle aria-controls="password" aria-label="Tampilkan kata sandi" class="absolute inset-y-0 right-0 inline-flex items-center px-3 text-slate-500 hover:text-emerald-700">
                             <i data-password-eye-open class="fa-solid fa-eye"></i>
-                            <i data-password-eye-closed class="fa-solid fa-eye-slash hidden"></i>
                         </button>
                     </div>
                     @error('password')
@@ -127,7 +119,6 @@
                     @enderror
                 </div>
 
-                <!-- Konfirmasi Kata Sandi -->
                 <div>
                     <label for="password_confirmation" class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-slate-600">Ulangi Kata Sandi Awal</label>
                     <div class="relative">
@@ -142,13 +133,11 @@
                             placeholder="Ulangi kata sandi" />
                         <button type="button" data-password-toggle aria-controls="password_confirmation" aria-label="Tampilkan kata sandi" class="absolute inset-y-0 right-0 inline-flex items-center px-3 text-slate-500 hover:text-emerald-700">
                             <i data-password-eye-open class="fa-solid fa-eye"></i>
-                            <i data-password-eye-closed class="fa-solid fa-eye-slash hidden"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Footer Card / Submit Section -->
             <div class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 pt-5">
                 <p class="text-xs text-slate-500">
                     Pastikan data akun sudah benar sebelum menyimpannya.

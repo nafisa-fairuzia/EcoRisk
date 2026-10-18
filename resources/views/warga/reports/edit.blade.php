@@ -9,8 +9,10 @@
     </a>
 
     <header>
-        <p class="text-xs font-bold uppercase tracking-wide text-emerald-700">{{ $report->kode_laporan ?: 'Laporan #'.$report->id }}</p>
-        <h1 class="mt-1 text-2xl font-bold text-slate-900">Edit aduan</h1>
+        <div class="flex items-center justify-between">
+            <h1 class="text-2xl font-bold text-slate-900">Edit aduan</h1>
+            <p class="text-xs font-bold uppercase tracking-wide text-emerald-700">{{ $report->kode_laporan ?: 'Laporan #'.$report->id }}</p>
+        </div>
         <p class="mt-1 text-sm text-slate-500">Perbarui informasi selama petugas belum mulai menangani aduan ini.</p>
     </header>
 

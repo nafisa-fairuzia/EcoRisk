@@ -97,6 +97,11 @@ class AdminController extends Controller
         return view('admin.users.create');
     }
 
+    public function editUser(User $user): View
+    {
+        return view('admin.users.edit', ['managedUser' => $user]);
+    }
+
     public function storeUser(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -121,6 +126,60 @@ class AdminController extends Controller
         return redirect()
             ->route('admin.users.index')
             ->with('success', 'Akun '.($validated['role'] === 'petugas' ? 'petugas' : 'administrator').' berhasil dibuat. Berikan email dan kata sandi kepada pemilik akun melalui jalur yang aman.');
+    }
+
+    public function updateUser(Request $request, User $user): RedirectResponse
+    {
+        $isCurrentUser = $request->user()?->is($user);
+        $roles = ['admin', 'petugas', 'warga', 'mitra_daur_ulang'];
+        $statuses = ['Aktif', 'Nonaktif'];
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
+            'role' => ['required', Rule::in($isCurrentUser ? [$user->role] : $roles)],
+            'zona_wilayah' => ['exclude_if:role,admin', Rule::requiredIf($request->input('role') === 'petugas'), 'nullable', 'string', 'max:100'],
+            'alamat' => ['nullable', 'string', 'max:255'],
+            'telepon' => ['nullable', 'string', 'max:30'],
+            'status' => ['required', Rule::in($isCurrentUser ? [$user->status] : $statuses)],
+            'password' => ['nullable', 'confirmed', 'string', 'min:8'],
+        ]);
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->role = $validated['role'];
+        $user->zona_wilayah = $validated['role'] === 'admin'
+            ? 'Koordinator Induk Seluruh Wilayah'
+            : ($validated['role'] === 'petugas' ? $validated['zona_wilayah'] : ($validated['zona_wilayah'] ?? null));
+        $user->alamat = $validated['alamat'] ?? null;
+        $user->telepon = $validated['telepon'] ?? null;
+        $user->status = $validated['status'];
+
+        if (filled($validated['password'] ?? null)) {
+            $user->password = $validated['password'];
+        }
+
+        $user->save();
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', "Akun {$user->name} berhasil diperbarui.");
+    }
+
+    public function deleteUser(Request $request, User $user): RedirectResponse
+    {
+        if ($request->user()?->is($user)) {
+            return back()->withErrors([
+                'user' => 'Anda tidak dapat menghapus akun yang sedang digunakan.',
+            ]);
+        }
+
+        $name = $user->name;
+        $user->delete();
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', "Akun {$name} dan data terkait berhasil dihapus.");
     }
 
     public function toggleUserStatus(Request $request, int $id): RedirectResponse

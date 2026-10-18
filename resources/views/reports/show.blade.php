@@ -9,7 +9,6 @@
 @endphp
 
 <section class="mx-auto max-w-5xl space-y-4 pb-8">
-    <!-- Tombol Kembali -->
     <div class="flex flex-wrap items-center justify-between gap-3">
         <a
             href="{{ $isAdmin ? route('admin.heatmap') : ($isOfficer ? route('petugas.dashboard') : route('warga.dashboard', ['section' => 'reports'])) }}"
@@ -45,7 +44,6 @@
         Aduan ini sudah diproses atau ditangani petugas, sehingga tidak dapat diedit atau dihapus.
     </p>
     @endif
-    <!-- Header Detail -->
     <header class="flex flex-col gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-xs sm:flex-row sm:items-center sm:justify-between">
         <div class="space-y-1">
             <span class="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider text-emerald-600 uppercase">
@@ -57,10 +55,8 @@
         <x-report-badge type="status" :value="$report->status" :label="$statusLabel" />
     </header>
 
-    <!-- Grid Utama & Sidebar Timeline -->
     <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_21rem]">
         <div class="space-y-4">
-            <!-- Informasi Laporan -->
             <section class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-xs">
                 <h2 class="flex items-center gap-2 text-base font-bold text-slate-900">
                     <i class="fa-solid fa-circle-info text-emerald-600 text-sm"></i> Informasi Laporan
@@ -97,7 +93,6 @@
                 </dl>
             </section>
 
-            <!-- Foto Laporan & Penanganan -->
             @if ($photoUrl || $completionPhotoUrl)
             <section class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-xs">
                 <h2 class="flex items-center gap-2 text-base font-bold text-slate-900">
@@ -124,7 +119,6 @@
             </section>
             @endif
 
-            <!-- Catatan Petugas -->
             @if ($report->catatan_petugas)
             <section class="rounded-2xl border border-emerald-200/80 bg-emerald-50/60 p-4 shadow-xs">
                 <h2 class="flex items-center gap-2 text-sm font-bold text-emerald-900">
@@ -142,7 +136,6 @@
             </section>
             @endif
 
-            <!-- Informasi Pelapor (Khusus Petugas/Admin) -->
             @if ($isOfficer)
             <section class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-xs">
                 <h2 class="flex items-center gap-2 text-base font-bold text-slate-900">
@@ -169,7 +162,6 @@
             @endif
         </div>
 
-        <!-- Sidebar Timeline Penanganan -->
        <aside class="h-fit rounded-2xl border border-neutral-200 bg-white p-5 shadow-xs">
     <h2 class="text-base font-bold text-neutral-900">Timeline penanganan</h2>
     <ol class="mt-5 space-y-0">

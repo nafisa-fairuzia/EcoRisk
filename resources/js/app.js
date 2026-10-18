@@ -3,20 +3,35 @@ const locationPickerElement = document.querySelector('[data-location-picker]');
 
 document.querySelectorAll('[data-password-toggle]').forEach((button) => {
 	const input = document.getElementById(button.getAttribute('aria-controls'));
-	const eyeOpen = button.querySelector('[data-password-eye-open]');
-	const eyeClosed = button.querySelector('[data-password-eye-closed]');
 
-	if (!input || !eyeOpen || !eyeClosed) {
-		return;
-	}
+	if (!input) {
+BBB	}
 
 	button.addEventListener('click', () => {
 		const isVisible = input.type === 'text';
 		input.type = isVisible ? 'password' : 'text';
 		button.setAttribute('aria-label', isVisible ? 'Tampilkan kata sandi' : 'Sembunyikan kata sandi');
-		eyeOpen.classList.toggle('hidden', !isVisible);
-		eyeClosed.classList.toggle('hidden', isVisible);
 	});
+});
+
+document.querySelectorAll('[data-user-avatar]').forEach((avatar) => {
+	const image = avatar.querySelector('[data-user-avatar-image]');
+	const fallback = avatar.querySelector('[data-user-avatar-fallback]');
+
+	if (!(image instanceof HTMLImageElement) || !fallback) {
+		return;
+	}
+
+	const showFallback = () => {
+		image.classList.add('hidden');
+		fallback.classList.remove('hidden');
+	};
+
+	image.addEventListener('error', showFallback, { once: true });
+
+	if (image.complete && image.naturalWidth === 0) {
+		showFallback();
+	}
 });
 
 document.querySelectorAll('[data-profile-photo-input]').forEach((input) => {
